@@ -1,0 +1,1 @@
+<img src="assets/images/logo-light.png" alt="" width="150">
