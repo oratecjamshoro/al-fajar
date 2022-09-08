@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\admin\hr;
+namespace App\Http\Controllers\admin\inventory;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Employee;
-use App\Models\Employee_type;
-use App\Models\Designation;
+use App\Models\Inv_Item;
+use App\Models\Inv_Category;
 
-class EmployeesController extends Controller
+class ItemController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +16,9 @@ class EmployeesController extends Controller
      */
     public function index()
     {
-        $employees= Employee::all();
-        return view('admin.hr.employees.index',compact('employees'));
+        $items= Inv_Item::all();
+        
+        return view('admin.inventory.items.index',compact('items'));
     }
 
     /**
@@ -28,9 +28,8 @@ class EmployeesController extends Controller
      */
     public function create()
     {
-        $employee_type = Employee_type::all()->except(3)->pluck('emp_type','id');
-        $designations = Designation::all()->pluck('designation','id');
-        return view('admin.hr.employees.create',compact('employee_type','designations'));
+        $categories = Inv_Category::pluck('title','id')->all();
+        return view('admin.inventory.items.create',compact('categories'));
     }
 
     /**
@@ -41,23 +40,19 @@ class EmployeesController extends Controller
      */
     public function store(Request $request)
     {
-        $emp_code = rand(10000, 99999);
-        $employee = new Employee;
+        $validated = $request->validate([
+            'item_name' => 'required|max:255',
+            'category_id' => 'required',
+        ]);
 
-        $employee->emp_name = $request->emp_name;
-        $employee->emp_father_name = $request->father_name;
-        $employee->emp_cnic = $request->emp_cnic;
-        $employee->emp_contact = $request->phone;
-        $employee->emp_type = $request->emp_type;
-        $employee->emp_designation = $request->emp_designation;
-        $employee->emp_sallary = $request->emp_sallary;
-        $employee->emp_code = $emp_code;
-        $employee->emp_photo = $request->emp_pic;
-        $employee->status = "Active";
+        $item = new Inv_Item;
 
-        $employee->save();
+        $item->item_name = $request->item_name;
+        $item->category_id = $request->category_id;
 
-        return redirect('employees')->with('success',"Insert successfully");
+        $item->save();
+
+        return redirect('inv_item')->with('success',"Insert successfully");
     }
 
     /**

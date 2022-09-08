@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\admin\hr;
+namespace App\Http\Controllers\admin\inventory;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Employee;
-use App\Models\Employee_type;
-use App\Models\Designation;
+use App\Models\Inv_Category;
 
-class EmployeesController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +15,8 @@ class EmployeesController extends Controller
      */
     public function index()
     {
-        $employees= Employee::all();
-        return view('admin.hr.employees.index',compact('employees'));
+        $categories= Inv_Category::all();
+        return view('admin.inventory.category.index',compact('categories'));
     }
 
     /**
@@ -28,9 +26,7 @@ class EmployeesController extends Controller
      */
     public function create()
     {
-        $employee_type = Employee_type::all()->except(3)->pluck('emp_type','id');
-        $designations = Designation::all()->pluck('designation','id');
-        return view('admin.hr.employees.create',compact('employee_type','designations'));
+        return view('admin.inventory.category.create');
     }
 
     /**
@@ -41,23 +37,16 @@ class EmployeesController extends Controller
      */
     public function store(Request $request)
     {
-        $emp_code = rand(10000, 99999);
-        $employee = new Employee;
+        $validated = $request->validate([
+            'category_name' => 'required|max:255',
+        ]);
 
-        $employee->emp_name = $request->emp_name;
-        $employee->emp_father_name = $request->father_name;
-        $employee->emp_cnic = $request->emp_cnic;
-        $employee->emp_contact = $request->phone;
-        $employee->emp_type = $request->emp_type;
-        $employee->emp_designation = $request->emp_designation;
-        $employee->emp_sallary = $request->emp_sallary;
-        $employee->emp_code = $emp_code;
-        $employee->emp_photo = $request->emp_pic;
-        $employee->status = "Active";
+        $category = new Inv_Category;
 
-        $employee->save();
+        $category->title = $request->category_name;
+        $category->save();
 
-        return redirect('employees')->with('success',"Insert successfully");
+        return redirect('inv_category')->with('success',"Insert successfully");
     }
 
     /**

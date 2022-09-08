@@ -76,8 +76,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Designation<span class="text-danger">*</span></label>
-                                                    <input type="text" name="emp_designation" parsley-trigger="change" required
-                                                        placeholder="Enter Designation" class="form-control">
+                                                    {!! Form::select('emp_designation', $designations, null, ['class' => 'form-control','data-toggle'=>'select2']) !!}
                                                 </div>
                                             </div>
                                         </div>

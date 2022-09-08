@@ -253,13 +253,6 @@
                             </li>
 
                             <li>
-                                <a href="{{Route('employees.index')}}">
-                                    <i class="fe-airplay"></i>
-                                    <span>Employees</span>
-                                </a>
-                            </li>
-                            
-                            <li>
                                 <a href="javascript: void(0);">
                                     <i class="fe-sidebar"></i>
                                     <span>Utility</span>
@@ -286,12 +279,25 @@
                             <li>
                                 <a href="javascript: void(0);">
                                     <i class="fe-sidebar"></i>
+                                    <span>HR</span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <ul class="nav-second-level" aria-expanded="false">
+                                    <li><a href="{{Route('employees.index')}}">Employees</a></li>
+                            </li>
+                                    
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="javascript: void(0);">
+                                    <i class="fe-sidebar"></i>
                                     <span>Inventory</span>
                                     <span class="menu-arrow"></span>
                                 </a>
                                 <ul class="nav-second-level" aria-expanded="false">
-                                    <li><a href="#">Request</a></li>
-                                    <li><a href="#">Received</a></li>
+                                    <li><a href="{{Route('inv_category.index')}}">Category</a></li>
+                                    <li><a href="{{Route('inv_item.index')}}">Items</a></li>
                                 </ul>
                             </li>
                             <li>

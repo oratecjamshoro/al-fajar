@@ -33,6 +33,8 @@ Route::middleware([
     Route::resource('employees','App\Http\Controllers\admin\hr\EmployeesController');
     Route::resource('users','App\Http\Controllers\admin\users\UserController');
     Route::resource('supplier','App\Http\Controllers\admin\supplier\SupplierController');
+    Route::resource('inv_category','App\Http\Controllers\admin\inventory\CategoryController');
+    Route::resource('inv_item','App\Http\Controllers\admin\inventory\ItemController');
     
 });
 
