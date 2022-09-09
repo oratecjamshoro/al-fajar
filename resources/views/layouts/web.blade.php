@@ -276,6 +276,7 @@
                                 </ul>
                             </li>
 
+                           
                             <li>
                                 <a href="javascript: void(0);">
                                     <i class="fe-sidebar"></i>
@@ -284,11 +285,11 @@
                                 </a>
                                 <ul class="nav-second-level" aria-expanded="false">
                                     <li><a href="{{Route('employees.index')}}">Employees</a></li>
-                            </li>
-                                    
+                          
                                 </ul>
                             </li>
-
+                          
+                      
                             <li>
                                 <a href="javascript: void(0);">
                                     <i class="fe-sidebar"></i>
@@ -300,6 +301,8 @@
                                     <li><a href="{{Route('inv_item.index')}}">Items</a></li>
                                 </ul>
                             </li>
+                            
+
                             <li>
                                 <a href="#">
                                     <i class="fe-airplay"></i>

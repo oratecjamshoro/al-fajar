@@ -36,7 +36,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Employee Name<span class="text-danger">*</span></label>
-                                                    <input type="text" name="emp_name" parsley-trigger="change" required
+                                                    <input type="text" name="name" parsley-trigger="change" required
                                                         placeholder="Enter Employee Name" class="form-control">
                                                 </div>
                                             </div>
@@ -76,7 +76,24 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Designation<span class="text-danger">*</span></label>
-                                                    {!! Form::select('emp_designation', $designations, null, ['class' => 'form-control','data-toggle'=>'select2']) !!}
+                                                    {!! Form::select('emp_designation', $designations, null, ['class' => 'form-control','id'=>'designation','data-toggle'=>'select2']) !!}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6" style="display: none" id="user_name">
+                                                <div class="form-group">
+                                                    <label>Username<span class="text-danger">*</span></label>
+                                                    <input type="text" name="email" parsley-trigger="change"
+                                                        placeholder="Enter Username" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6" style="display: none;" id="password">
+                                                <div class="form-group">
+                                                    <label>Password<span class="text-danger">*</span></label>
+                                                    <input type="password" name="password" parsley-trigger="change"
+                                                        placeholder="Enter Password" class="form-control">
                                                 </div>
                                             </div>
                                         </div>
@@ -92,7 +109,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Employee Pic<span class="text-danger">*</span></label>
-                                                    <input type="file" name="emp_pic" parsley-trigger="change" required
+                                                    <input type="file" name="emp_pic" parsley-trigger="change"
                                                         placeholder="Enter Phone" class="form-control">
                                                 </div>
                                             </div>
@@ -128,5 +145,37 @@
 <script src="{{asset('assets/libs/jquery-mask-plugin/jquery.mask.min.js')}}"></script>
 <script src="{{asset('assets/libs/autonumeric/autoNumeric-min.js')}}"></script>
 <script src="{{asset('assets/js/pages/form-masks.init.js')}}"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+
+        $("#designation").change(function(){
+            var designation = $('#designation :selected').text();
+
+            if(designation == 'MCCI')
+            {
+                $("#user_name").css("display","block");
+                $("#password").css("display","block");
+                $("#user_name :input").attr("required", "true");
+                $("#password :input").attr("required", "true");
+            }else{
+
+                $("#user_name").css("display","none");
+                $("#password").css("display","none");
+                $("#user_name :input").removeAttr('required');
+                $("#password :input").removeAttr('required');
+            }
+
+            
+
+        });
+
+
+    
+    
+  
+     });
+</script>
 
 @endsection

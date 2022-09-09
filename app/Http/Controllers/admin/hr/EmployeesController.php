@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Employee;
 use App\Models\Employee_type;
 use App\Models\Designation;
+use App\Models\User;
+use Hash;
 
 class EmployeesController extends Controller
 {
@@ -42,22 +44,49 @@ class EmployeesController extends Controller
     public function store(Request $request)
     {
         $emp_code = rand(10000, 99999);
-        $employee = new Employee;
+        $designation = Designation::where('id',$request->emp_designation)->first();
 
-        $employee->emp_name = $request->emp_name;
-        $employee->emp_father_name = $request->father_name;
-        $employee->emp_cnic = $request->emp_cnic;
-        $employee->emp_contact = $request->phone;
-        $employee->emp_type = $request->emp_type;
-        $employee->emp_designation = $request->emp_designation;
-        $employee->emp_sallary = $request->emp_sallary;
-        $employee->emp_code = $emp_code;
-        $employee->emp_photo = $request->emp_pic;
-        $employee->status = "Active";
+        if($designation->designation == "MCCI")
+        {
+            $input = $request->all();
+            $input['password'] = Hash::make($input['password']);
+        
+            $user = User::create($input);
+            $user->assignRole(['MCCI']);
 
-        $employee->save();
+            $employee = new Employee;
+            $employee->emp_name = $request->name;
+            $employee->emp_father_name = $request->father_name;
+            $employee->emp_cnic = $request->emp_cnic;
+            $employee->emp_contact = $request->phone;
+            $employee->emp_type = $request->emp_type;
+            $employee->emp_designation = $request->emp_designation;
+            $employee->emp_sallary = $request->emp_sallary;
+            $employee->emp_code = $emp_code;
+            $employee->emp_photo = $request->emp_pic;
+            $employee->status = "Active";
 
-        return redirect('employees')->with('success',"Insert successfully");
+            $employee->save();
+
+            return redirect('employees')->with('success',"Insert successfully");            
+        }else{
+        
+            $employee = new Employee;
+            $employee->emp_name = $request->name;
+            $employee->emp_father_name = $request->father_name;
+            $employee->emp_cnic = $request->emp_cnic;
+            $employee->emp_contact = $request->phone;
+            $employee->emp_type = $request->emp_type;
+            $employee->emp_designation = $request->emp_designation;
+            $employee->emp_sallary = $request->emp_sallary;
+            $employee->emp_code = $emp_code;
+            $employee->emp_photo = $request->emp_pic;
+            $employee->status = "Active";
+
+            $employee->save();
+
+            return redirect('employees')->with('success',"Insert successfully");
+        }
     }
 
     /**
