@@ -74,7 +74,7 @@ class SupplierController extends Controller
         $supplier->contact = $request->contact;
         $supplier->other_contact = $request->other_contact;
         $supplier->address = $request->address;
-        $supplier->image = $request->image;
+        $supplier->image = $image;
         $supplier->status = $request->status;
         $supplier->mcc_id = $mcc->id;
         $supplier->save();

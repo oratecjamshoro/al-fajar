@@ -27,7 +27,7 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 
-    
+    //Admin Routes
     Route::resource('mcc','App\Http\Controllers\admin\mcc\MCCController');
 
     Route::resource('employees','App\Http\Controllers\admin\hr\EmployeesController');
@@ -35,7 +35,9 @@ Route::middleware([
     Route::resource('supplier','App\Http\Controllers\admin\supplier\SupplierController');
     Route::resource('inv_category','App\Http\Controllers\admin\inventory\CategoryController');
     Route::resource('inv_item','App\Http\Controllers\admin\inventory\ItemController');
-    
+
+    // MCC Routes
+    Route::resource('milk_detail','App\Http\Controllers\mcc\MilkDetailController');
 });
 
 

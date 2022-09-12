@@ -193,6 +193,15 @@
                                 </a>
                             </li>
 
+                            
+                            <li>
+                                <a href="{{Route('milk_detail.index')}}">
+                                    <i class="fe-airplay"></i>
+                                    <span>Today List</span>
+                                </a>
+                            </li>
+                            
+
                             @can('mcc-list')
                             <li>
                                 <a href="{{Route('mcc.index')}}">
