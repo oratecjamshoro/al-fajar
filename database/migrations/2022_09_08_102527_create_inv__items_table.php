@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('item_name');
             $table->integer('category_id');
             $table->integer('status')->default(1);
-            $table->integer('user_id');
+            $table->integer('user_id')->nullable();
             $table->timestamps();
         });
     }

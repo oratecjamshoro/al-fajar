@@ -14,8 +14,16 @@ class Inv_Item extends Model
    	 ];
 
 
-   	  public function Inv_Category()
+   	public function Inv_Category()
     {
         return $this->belongsTo(Inv_Category::class);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        self::creating(function($model){
+            $model->user_id = auth()->id();
+        });
     }
 }

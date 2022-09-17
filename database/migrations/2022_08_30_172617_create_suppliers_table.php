@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->string('status');
             $table->integer('mcc_id');
+            $table->integer('user_id')->nullable();
             $table->timestamps();
         });
     }

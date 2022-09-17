@@ -17,4 +17,12 @@ class Supplier extends Model
         'photo',
         'status'
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+        self::creating(function($model){
+            $model->user_id = auth()->id();
+        });
+    }
 }

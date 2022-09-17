@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('emp_code');
             $table->string('emp_photo');
             $table->string('status');
+            $table->integer('user_id')->nullable();
             $table->timestamps();
         });
     }

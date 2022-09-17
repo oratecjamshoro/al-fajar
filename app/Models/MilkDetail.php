@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class MilkDetail extends Model
 {
     use HasFactory;
+
+    
+    protected static function boot()
+    {
+        parent::boot();
+        self::creating(function($model){
+            $model->user_id = auth()->id();
+        });
+    }
 }

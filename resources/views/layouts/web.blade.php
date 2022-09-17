@@ -193,7 +193,7 @@
                                 </a>
                             </li>
 
-                            @can('today-list')
+                            @can('today-access')
                             <li>
                                 <a href="{{Route('milk_detail.index')}}">
                                     <i class="fe-airplay"></i>
@@ -203,7 +203,7 @@
                             @endcan
                             
 
-                            @can('mcc-list')
+                            @can('mcc-access')
                             <li>
                                 <a href="{{Route('mcc.index')}}">
                                     <i class="fe-airplay"></i>
@@ -213,7 +213,7 @@
                             @endcan
                             
 
-                            @can('mmt-list')
+                            @can('mmt-access')
                             <li>
                                 <a href="javascript: void(0);">
                                     <i class="fe-sidebar"></i>
@@ -221,7 +221,7 @@
                                     <span class="menu-arrow"></span>
                                 </a>
                                 <ul class="nav-second-level" aria-expanded="false">
-                                @can('mmt-list')
+                                @can('mmt-access')
                                     <li><a href="#">View MMT</a></li>
                                 @endcan
                                 @can('mmt-create')
@@ -231,7 +231,7 @@
                             </li>
                             @endcan
                             
-                            @can('today-list')
+                            @can('today-access')
                             <li>
                                 <a href="#">
                                     <i class="fe-airplay"></i>
@@ -239,7 +239,7 @@
                                 </a>
                             </li>
                             @endcan
-                            @can('received-milk')
+                            @can('received-milk-access')
                             <li>
                                 <a href="#">
                                     <i class="fe-airplay"></i>
@@ -248,7 +248,7 @@
                             </li>
                             @endcan
                            
-                            @can('supplier-list')
+                            @can('supplier-access')
                             <li>
                                 <a href="{{Route('supplier.index')}}">
                                     <i class="fe-airplay"></i>
@@ -257,7 +257,7 @@
                             </li>
                             @endcan
                            
-                            @can('doodi-list')
+                            @can('doodi-access')
                             <li>
                                 <a href="#">
                                     <i class="fe-airplay"></i>
@@ -266,7 +266,7 @@
                             </li>
                             @endcan
 
-                            @can('utility')
+                            @can('utility-access')
                             <li>
                                 <a href="javascript: void(0);">
                                     <i class="fe-sidebar"></i>
@@ -280,7 +280,7 @@
                             </li>
                             @endcan
 
-                            @can('account')
+                            @can('account-access')
                             <li>
                                 <a href="javascript: void(0);">
                                     <i class="fe-sidebar"></i>
@@ -294,7 +294,7 @@
                             </li>
                             @endcan
                            
-                            @can('hr')
+                            @can('hr-access')
                             <li>
                                 <a href="javascript: void(0);">
                                     <i class="fe-sidebar"></i>
@@ -308,7 +308,7 @@
                             </li>
                           @endcan
                       
-                          @can('inventory')
+                          @can('inventory-access')
                             <li>
                                 <a href="javascript: void(0);">
                                     <i class="fe-sidebar"></i>
@@ -322,7 +322,7 @@
                             </li>
                             @endcan
 
-                            @can('report')
+                            @can('report-access')
                             <li>
                                 <a href="#">
                                     <i class="fe-airplay"></i>
@@ -331,7 +331,7 @@
                             </li>
                             @endcan
                             
-                            @can('user-list')
+                            @can('user-access')
                             <li>
                                 <a href="javascript: void(0);">
                                     <i class="fe-sidebar"></i>
@@ -339,13 +339,13 @@
                                     <span class="menu-arrow"></span>
                                 </a>
                                 <ul class="nav-second-level" aria-expanded="false">
-                                @can('user-list')
+                                @can('user-access')
                                     <li><a href="{{Route('users.index')}}">Manage Users</a></li>
                                 @endcan
-                                @can('role-list')
+                                @can('role-access')
                                     <li><a href="{{Route('roles.index')}}">Roles</a></li>
                                 @endcan
-                                @can('permission-list')
+                                @can('permission-access')
                                     <li><a href="{{Route('permissions.index')}}">Permissions</a></li>
                                 @endcan
                                 </ul>

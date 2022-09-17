@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('employee_types', function (Blueprint $table) {
             $table->id();
             $table->string('emp_type');
+            $table->integer('user_id')->nullable();
             $table->timestamps();
         });
     }

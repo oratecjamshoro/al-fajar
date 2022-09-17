@@ -11,4 +11,12 @@ class Employee_type extends Model
     protected $fillable = [
         'emp_type',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+        self::creating(function($model){
+            $model->user_id = auth()->id();
+        });
+    }
 }

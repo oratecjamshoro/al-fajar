@@ -20,4 +20,11 @@ class Inv_Category extends Model
         return $this->hasMany('App\Models\Inv_Item');
     }
 
+    protected static function boot()
+    {
+        parent::boot();
+        self::creating(function($model){
+            $model->user_id = auth()->id();
+        });
+    }
 }

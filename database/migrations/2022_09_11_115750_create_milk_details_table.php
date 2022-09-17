@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('snf');
             $table->string('percentage');
             $table->string('ts');
+            $table->integer('user_id')->nullable();
             $table->timestamps();
         });
     }
