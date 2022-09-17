@@ -17,7 +17,19 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        $suppliers = Supplier::all();
+        
+        if(Auth::user()->getRoleNames()[0] == 'admin')
+        {
+            $suppliers = Supplier::all();
+        }
+        else
+        {
+            $mcc = MCC::where('mcci_id',Auth::user()->id)->first('id');
+            $suppliers = Supplier::where('mcc_id',$mcc->id)->get();
+        }
+        
+
+        
         return view('admin.supplier.index',compact('suppliers'));
     }
 
