@@ -22,7 +22,6 @@ class DesignationSeeder extends Seeder
 		  'Data Entry Operator',							
 		  'Field Supervisor',							
 		  'Lab Supervisor',							
-		  'Lab Supervisor',							
 		  'Phe Operator',							
 		  'Vehicle Washer',							
 		  'MCCI',							
