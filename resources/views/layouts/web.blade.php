@@ -193,13 +193,14 @@
                                 </a>
                             </li>
 
-                            
+                            @can('today-list')
                             <li>
                                 <a href="{{Route('milk_detail.index')}}">
                                     <i class="fe-airplay"></i>
                                     <span>Today List</span>
                                 </a>
                             </li>
+                            @endcan
                             
 
                             @can('mcc-list')
@@ -247,20 +248,25 @@
                             </li>
                             @endcan
                            
+                            @can('supplier-list')
                             <li>
                                 <a href="{{Route('supplier.index')}}">
                                     <i class="fe-airplay"></i>
                                     <span>Supplier</span>
                                 </a>
                             </li>
+                            @endcan
                            
+                            @can('doodi-list')
                             <li>
                                 <a href="#">
                                     <i class="fe-airplay"></i>
                                     <span>Doodi</span>
                                 </a>
                             </li>
+                            @endcan
 
+                            @can('utility')
                             <li>
                                 <a href="javascript: void(0);">
                                     <i class="fe-sidebar"></i>
@@ -272,7 +278,9 @@
                                     <li><a href="#">Wapda Reading</a></li>
                                 </ul>
                             </li>
+                            @endcan
 
+                            @can('account')
                             <li>
                                 <a href="javascript: void(0);">
                                     <i class="fe-sidebar"></i>
@@ -284,8 +292,9 @@
                                     <li><a href="#">Expanses</a></li>
                                 </ul>
                             </li>
-
+                            @endcan
                            
+                            @can('hr')
                             <li>
                                 <a href="javascript: void(0);">
                                     <i class="fe-sidebar"></i>
@@ -297,8 +306,9 @@
                           
                                 </ul>
                             </li>
-                          
+                          @endcan
                       
+                          @can('inventory')
                             <li>
                                 <a href="javascript: void(0);">
                                     <i class="fe-sidebar"></i>
@@ -310,14 +320,17 @@
                                     <li><a href="{{Route('inv_item.index')}}">Items</a></li>
                                 </ul>
                             </li>
-                            
+                            @endcan
 
+                            @can('report')
                             <li>
                                 <a href="#">
                                     <i class="fe-airplay"></i>
                                     <span>Report</span>
                                 </a>
                             </li>
+                            @endcan
+                            
                             @can('user-list')
                             <li>
                                 <a href="javascript: void(0);">
@@ -330,10 +343,10 @@
                                     <li><a href="{{Route('users.index')}}">Manage Users</a></li>
                                 @endcan
                                 @can('role-list')
-                                    <li><a href="#">Roles</a></li>
+                                    <li><a href="{{Route('roles.index')}}">Roles</a></li>
                                 @endcan
                                 @can('permission-list')
-                                    <li><a href="#">Permissions</a></li>
+                                    <li><a href="{{Route('permissions.index')}}">Permissions</a></li>
                                 @endcan
                                 </ul>
                             </li>

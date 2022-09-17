@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\admin\MCCController;
+use App\Http\Controllers\PermissionsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +28,9 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    Route::resource('roles', RoleController::class);
+    Route::resource('permissions', PermissionsController::class);
 
     //Admin Routes
     Route::resource('mcc','App\Http\Controllers\admin\mcc\MCCController');
