@@ -231,7 +231,7 @@
                             </li>
                             @endcan
                             
-                            @can('today-access')
+                            @can('today-list-access')
                             <li>
                                 <a href="#">
                                     <i class="fe-airplay"></i>
