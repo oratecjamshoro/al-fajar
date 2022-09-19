@@ -233,7 +233,7 @@
                             
                             @can('today-list-access')
                             <li>
-                                <a href="#">
+                                <a href="{{Route('milk_detail.index')}}">
                                     <i class="fe-airplay"></i>
                                     <span>Today list</span>
                                 </a>
