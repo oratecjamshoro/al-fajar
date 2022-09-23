@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\admin\supplier;
 
-use App\Http\Controllers\Controller;
+use App\Models\MCC;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Models\MCC;
 
 class SupplierController extends Controller
 {
