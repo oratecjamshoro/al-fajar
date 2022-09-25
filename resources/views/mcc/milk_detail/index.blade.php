@@ -132,12 +132,12 @@
 <script src="assets/js/pages/datatables.init.js"></script>
 
 <script>
-    // if(!localStorage.shift)
-    // {
-    //     $('#shift').modal('show');
-    // }
+    if(!localStorage.shift)
+    {
+        $('#shift').modal('show');
+    }
 
-    $('#shift').modal('show');
+    //$('#shift').modal('show');
 
     $('.shift').click(function(){
         var shift = $(this).val();

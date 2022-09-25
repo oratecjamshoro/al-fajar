@@ -173,14 +173,25 @@
         let fat = ($('#fat').val())?parseFloat($('#fat').val()):0.00;
         let lr = ($('#lr').val())?parseFloat($('#lr').val()):0.00;
 
-        $('#snf').val(((lr/4)+(fat*0.22+0.72)).toFixed(2));
+        
+       
+
+        if(lr >0)
+        {
+            $('#snf').val(((lr/4)+(fat*0.22+0.72)).toFixed(2));
+        }
+        else
+        {
+            $('#snf').val((0).toFixed(2));
+        }
+
         let snf = ($('#snf').val())?parseFloat($('#snf').val()):0.00;
 
         if(tarif == 'buffalo')
         {
             $('#percentage').parent().parent().show();
             $('#ts').val('');
-            $('#percentage').val((gv*lr/6).toFixed(2));
+            $('#percentage').val((gv*fat/6).toFixed(2));
             $('#ts').parent().parent().hide();
         }
         else if(tarif == 'cow')
