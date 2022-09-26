@@ -174,18 +174,16 @@
         let lr = ($('#lr').val())?parseFloat($('#lr').val()):0.00;
 
         
-       
+        let snf = 0;
 
         if(lr >0)
         {
-            $('#snf').val(((lr/4)+(fat*0.22+0.72)).toFixed(2));
+            snf = ((lr/4)+(fat*0.22+0.72));
         }
-        else
-        {
-            $('#snf').val((0).toFixed(2));
-        }
+        
+        $('#snf').val((snf).toFixed(2));
 
-        let snf = ($('#snf').val())?parseFloat($('#snf').val()):0.00;
+        //alert("GV: "+gv+" FAT: "+fat+" LR: "+lr+" SNF: "+snf)
 
         if(tarif == 'buffalo')
         {
