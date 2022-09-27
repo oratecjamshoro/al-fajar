@@ -40,6 +40,7 @@ Route::middleware([
     Route::resource('supplier','App\Http\Controllers\admin\supplier\SupplierController');
     Route::resource('inv_category','App\Http\Controllers\admin\inventory\CategoryController');
     Route::resource('inv_item','App\Http\Controllers\admin\inventory\ItemController');
+    Route::resource('inv_request','App\Http\Controllers\employees\InventoryRequestController');
 
     // MCC Routes
     Route::resource('milk_detail','App\Http\Controllers\mcc\MilkDetailController');
