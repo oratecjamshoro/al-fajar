@@ -22,9 +22,10 @@ return new class extends Migration
             $table->string('fat');
             $table->string('lr');
             $table->string('snf');
-            $table->string('percentage');
-            $table->string('ts');
+            $table->string('percentage')->nullable();
+            $table->string('ts')->nullable();
             $table->integer('user_id')->nullable();
+            $table->integer('mcc_id');
             $table->timestamps();
         });
     }
