@@ -63,7 +63,7 @@
                                         </div>
                                     </div>
 
-                                    <form action="{{Route('milk_detail.store',$supplier->id)}}" method="post" enctype="multipart/form-data" class="parsley-examples" novalidate="">
+                                    <form action="{{Route('milk_detail.store')}}" method="post" enctype="multipart/form-data" class="parsley-examples" novalidate="">
                                         @csrf
                                         <div class="row">
                                             <div class="col-md-4">
@@ -109,7 +109,7 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>6%<span class="text-danger">*</span></label>
-                                                    <input type="text" name="percentage" id="percentage" parsley-trigger="change" required
+                                                    <input type="text" name="percentage" id="percentage" parsley-trigger="change" 
                                                         placeholder="Enter 6%" class="form-control" readonly>
                                                 </div>
                                             </div>
@@ -117,12 +117,12 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>T.S<span class="text-danger">*</span></label>
-                                                    <input type="text" name="ts" id="ts" parsley-trigger="change" required
+                                                    <input type="text" name="ts" id="ts" parsley-trigger="change" 
                                                         placeholder="Enter T.S" class="form-control" readonly>
                                                 </div>
                                             </div>
                                         </div>
-
+                                        <input type="hidden" name="id" value="{{$supplier->id}}">
                                         <div class="form-group text-right mb-0">
                                             <button class="btn btn-primary waves-effect waves-light mr-1" type="submit">
                                                 Submit
@@ -154,7 +154,7 @@
 <script src="{{asset('assets/js/pages/form-masks.init.js')}}"></script>
 
 <script>
-    if(localStorage.shift)
+    if(!localStorage.shift)
     {
         $('#shift').html(localStorage.shift);
     }
@@ -168,6 +168,7 @@
     $('#percentage').parent().parent().hide();
 
     $('.cal').on('keyup change', function(e) {
+
         let tarif = $('#tarif').val();
         let gv = ($('#gv').val())?parseFloat($('#gv').val()):0.00;
         let fat = ($('#fat').val())?parseFloat($('#fat').val()):0.00;
@@ -181,7 +182,7 @@
             snf = ((lr/4)+(fat*0.22+0.72));
         }
         
-        $('#snf').val((snf).toFixed(2));
+        $('#snf').val(snf);
 
         //alert("GV: "+gv+" FAT: "+fat+" LR: "+lr+" SNF: "+snf)
 
@@ -189,7 +190,7 @@
         {
             $('#percentage').parent().parent().show();
             $('#ts').val('');
-            $('#percentage').val((gv*fat/6).toFixed(2));
+            $('#percentage').val((gv*fat/6));
             $('#ts').parent().parent().hide();
         }
         else if(tarif == 'cow')
@@ -199,8 +200,8 @@
             $('#ts').val(((fat+snf)*gv/13).toFixed(2));
             $('#percentage').parent().parent().hide();
         }
-    });
 
+    });
     
 </script>
 
