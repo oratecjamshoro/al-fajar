@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\mcc;
 
+use Carbon\Carbon;
 use App\Models\MCC;
 use App\Models\Supplier;
 use App\Models\MilkDetail;
@@ -18,9 +19,10 @@ class MilkDetailController extends Controller
      */
     public function index()
     {
-       
+        $suppliers_id = MilkDetail::whereDate('created_at', Carbon::today())->pluck('supplier')->unique();
+
         $mcc = MCC::where('mcci_id',Auth::user()->id)->first('id');
-        $suppliers = Supplier::where('mcc_id',$mcc->id)->get();
+        $suppliers = Supplier::where('mcc_id',$mcc->id)->whereNotIn('id',$suppliers_id)->get();
         return view('mcc.milk_detail.index',compact('suppliers'));
     }
 
@@ -42,7 +44,36 @@ class MilkDetailController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'tarif_chanal' => 'required|max:255',
+            'gv' => 'required',
+            'fat' => 'required',
+            'lr' => 'required',
+            'snf' => 'required',
+            'id' => 'required'
+        ]);
+
+
+        if(!$mcc = MCC::where('mcci_id',Auth::user()->id)->first('id'))
+        {
+            return 'You have not assign any MCC';
+        }
+
+        $milk = new MilkDetail;
+
+        $milk->tarif_chanal = $request->tarif_chanal;
+        $milk->shift = $_COOKIE['shift'];
+        $milk->supplier = $request->id;
+        $milk->gv = $request->gv;
+        $milk->fat = $request->fat;
+        $milk->lr = $request->lr;
+        $milk->snf = $request->snf;
+        $milk->percentage = $request->percentage;
+        $milk->ts = $request->ts;
+        $milk->mcc_id = $mcc->id;
+        $milk->save();
+        
+        return redirect('milk_detail')->with('success',"Insert successfully");
     }
 
     /**
