@@ -132,7 +132,7 @@
 <script src="assets/js/pages/datatables.init.js"></script>
 
 <script>
-    if(localStorage.shift)
+    if(!localStorage.shift)
     {
         $('#shift').modal('show');
     }
@@ -142,7 +142,7 @@
     $('.shift').click(function(){
         var shift = $(this).val();
         document.cookie = "shift="+shift;
-        //localStorage.shift = shift;
+        localStorage.shift = shift;
         $('#shift').modal('hide');
     });
 </script>
