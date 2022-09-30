@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('category_id');
             $table->integer('item_id');
             $table->integer('qty');
+            $table->string('remarks');
             $table->integer('status')->default(0);
             $table->integer('user_id')->nullable();
             $table->timestamps();

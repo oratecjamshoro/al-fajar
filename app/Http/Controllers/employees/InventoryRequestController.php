@@ -56,6 +56,7 @@ class InventoryRequestController extends Controller
         $req_inventory->category_id = $request->category;
         $req_inventory->item_id = $request->item;
         $req_inventory->qty = $request->qty;
+        $req_inventory->remarks = $request->remarks;
         $req_inventory->save();
 
         return redirect('inv_request')->with('success',"Sent request successfully");

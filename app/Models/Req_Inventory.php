@@ -13,6 +13,7 @@ class Req_Inventory extends Model
         'category_id',
         'item_id',
         'qty',
+        'remarks',
         'status',
         'user_id'
     ];

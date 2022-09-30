@@ -54,6 +54,13 @@
                                                         placeholder="Enter Qty" class="form-control">
                                                 </div>
                                             </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Remarks<span class="text-danger">*</span></label>
+                                                    <input type="text" name="remarks" parsley-trigger="change" required
+                                                        placeholder="Enter Remarks" class="form-control">
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <div class="form-group text-right mb-0">
