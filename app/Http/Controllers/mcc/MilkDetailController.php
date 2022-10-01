@@ -83,7 +83,7 @@ class MilkDetailController extends Controller
             return 'You have not assign any MCC';
         }
 
-        $received_milk = MilkDetail::where('mcc_id',$mcc->id)->with('supplierdata')->get();
+        $received_milk = MilkDetail::whereDate('created_at', Carbon::today())->where('mcc_id',$mcc->id)->with('supplierdata')->get();
 
         return view('mcc.milk_detail.received_milk',compact('received_milk'));
     }
