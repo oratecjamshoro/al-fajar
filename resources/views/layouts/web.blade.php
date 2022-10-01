@@ -270,7 +270,7 @@
                             <li>
                                 <a href="{{route('inv_request.index')}}">
                                     <i class="fe-airplay"></i>
-                                    <span>Inventory</span>
+                                    <span>Inventory Request</span>
                                 </a>
                             </li>
                             @endcan
