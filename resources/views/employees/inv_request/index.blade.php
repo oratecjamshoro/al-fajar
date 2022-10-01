@@ -19,7 +19,9 @@
                                             <li class="breadcrumb-item active">Inventory</li>
                                         </ol>
                                     </div>
+                                    @can('inv-request-create')
                                     <h4 class="page-title">Request Inventory</h4>
+                                    @endcan
                                 </div>
                             </div>
                         </div>     

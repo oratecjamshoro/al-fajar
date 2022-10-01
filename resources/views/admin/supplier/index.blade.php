@@ -19,7 +19,9 @@
                                             <li class="breadcrumb-item active">Supplier</li>
                                         </ol>
                                     </div>
+                                    @can('supplier-create')
                                     <h4 class="page-title">Add Supplier</h4>
+                                    @endcan
                                 </div>
                             </div>
                         </div>     

@@ -266,13 +266,14 @@
                             </li>
                             @endcan
 
-
+                             @can('inv-request-access')
                             <li>
                                 <a href="{{route('inv_request.index')}}">
                                     <i class="fe-airplay"></i>
                                     <span>Inventory</span>
                                 </a>
                             </li>
+                            @endcan
                             
 
                             @can('utility-access')
