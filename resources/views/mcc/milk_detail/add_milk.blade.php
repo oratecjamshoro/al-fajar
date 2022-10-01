@@ -154,7 +154,7 @@
 <script src="{{asset('assets/js/pages/form-masks.init.js')}}"></script>
 
 <script>
-    if(!localStorage.shift)
+    if(localStorage.shift)
     {
         $('#shift').html(localStorage.shift);
     }

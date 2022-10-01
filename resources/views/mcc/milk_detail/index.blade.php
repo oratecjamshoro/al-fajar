@@ -134,15 +134,15 @@
 <script>
     if(!localStorage.shift)
     {
-        $('#shift').modal('show');
+        //$('#shift').modal('show');
     }
 
     $('#shift').modal('show');
 
     $('.shift').click(function(){
         var shift = $(this).val();
-        document.cookie = "shift="+shift;
         localStorage.shift = shift;
+        document.cookie = "shift="+shift;
         $('#shift').modal('hide');
     });
 </script>
