@@ -137,7 +137,7 @@
         $('#shift').modal('show');
     }
 
-    //$('#shift').modal('show');
+    $('#shift').modal('show');
 
     $('.shift').click(function(){
         var shift = $(this).val();
