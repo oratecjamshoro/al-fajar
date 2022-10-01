@@ -76,6 +76,18 @@ class MilkDetailController extends Controller
         return redirect('milk_detail')->with('success',"Insert successfully");
     }
 
+    public function received_milk()
+    {
+        if(!$mcc = MCC::where('mcci_id',Auth::user()->id)->first('id'))
+        {
+            return 'You have not assign any MCC';
+        }
+
+        $received_milk = MilkDetail::where('mcc_id',$mcc->id)->with('supplierdata')->get();
+
+        return view('mcc.milk_detail.received_milk',compact('received_milk'));
+    }
+
     /**
      * Display the specified resource.
      *

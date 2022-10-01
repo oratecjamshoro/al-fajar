@@ -241,7 +241,7 @@
                             @endcan
                             @can('received-milk-access')
                             <li>
-                                <a href="#">
+                                <a href="{{Route('received_milk')}}">
                                     <i class="fe-airplay"></i>
                                     <span>Received Milk list</span>
                                 </a>

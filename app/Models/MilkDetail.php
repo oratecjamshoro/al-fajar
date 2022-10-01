@@ -17,4 +17,9 @@ class MilkDetail extends Model
             $model->user_id = auth()->id();
         });
     }
+
+    public function supplierdata()
+    {
+        return $this->hasOne('App\Models\Supplier','id','supplier');
+    }
 }

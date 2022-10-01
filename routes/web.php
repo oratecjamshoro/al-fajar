@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\admin\MCCController;
 use App\Http\Controllers\PermissionsController;
+use App\Http\Controllers\mcc\MilkDetailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +45,8 @@ Route::middleware([
 
     // MCC Routes
     Route::resource('milk_detail','App\Http\Controllers\mcc\MilkDetailController');
+    Route::get('received_milk',[MilkDetailController::class,'received_milk'])->name('received_milk');
+
 });
 
 
