@@ -57,15 +57,22 @@
                                                 <td>{{$supplier->contact}}</td>
                                                 <td>{{$supplier->status}}</td>
                                                 <td>
+                                                    
                                                     <a class="btn btn-success btn-xs" href="{{ route('supplier.show',$supplier->id) }}">
                                                         <i class="fas fa-check-square"></i>
                                                     </a>
+
+                                                    @can('supplier-edit')
                                                     <a class="btn btn-warning btn-xs" href="{{ route('supplier.edit',$supplier->id) }}">
                                                         <i class="far fa-edit"></i>
                                                     </a>
+                                                    @endcan
+
+                                                    @can('supplier-delete')
                                                         {!! Form::open(['method' => 'DELETE','route' => ['supplier.destroy', $supplier->id],'style'=>'display:inline']) !!}
                                                             {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs'] )  !!}
                                                         {!! Form::close() !!}
+                                                    @endcan    
 
                                                 </td>
                                             </tr>
