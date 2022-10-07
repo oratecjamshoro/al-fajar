@@ -44,10 +44,11 @@
     
     
                                             <tbody>
+                                            <?php $a=1; ?>
                                             @foreach($suppliers as $supplier)
                                             <tr>
+                                                <td>{{$a++}}</td>
                                                 <td><img src="{{asset($supplier->image)}}" class="d-flex mr-3 rounded-circle" height="64" width="64"></td>
-                                                <td>{{$supplier->id}}</td>
                                                 <td>{{$supplier->name}}</td>
                                                 <td>{{$supplier->father_name}}</td>
                                                 <td>{{$supplier->contact}}</td>

@@ -67,16 +67,16 @@ class SupplierController extends Controller
             return 'You have not assign any MCC';
         }
 
-        $image ="";
+        $image ="no-image.png";
 
         if($request->image)
         {
             $image = time().'.'.$request->image->extension();
             $path = public_path('images/suppliers');
             $request->image->move($path, $image);
-
-            $image =$path.'/'.$image;
         }
+        $image ='images/suppliers/'.$image;
+
         
         $supplier = new Supplier;
 
