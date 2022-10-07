@@ -259,7 +259,7 @@
                            
                             @can('doodi-access')
                             <li>
-                                <a href="#">
+                                <a href="{{Route('doodi.index')}}">
                                     <i class="fe-airplay"></i>
                                     <span>Doodi</span>
                                 </a>

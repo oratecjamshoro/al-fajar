@@ -42,6 +42,7 @@ Route::middleware([
     Route::resource('inv_category','App\Http\Controllers\admin\inventory\CategoryController');
     Route::resource('inv_item','App\Http\Controllers\admin\inventory\ItemController');
     Route::resource('inv_request','App\Http\Controllers\employees\InventoryRequestController');
+    Route::resource('doodi','App\Http\Controllers\admin\hr\DoodiController');
 
     // MCC Routes
     Route::resource('milk_detail','App\Http\Controllers\mcc\MilkDetailController');
