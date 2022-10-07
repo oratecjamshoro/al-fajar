@@ -122,6 +122,17 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Temperature</label>
+                                                    <input type="text" name="temperature" parsley-trigger="change" required
+                                                        placeholder="Enter Temperature" class="form-control cal">
+                                                </div>
+                                            </div>
+                                        </div>    
+
                                         <input type="hidden" name="id" value="{{$supplier->id}}">
                                         <div class="form-group text-right mb-0">
                                             <button class="btn btn-primary waves-effect waves-light mr-1" type="submit">
@@ -166,6 +177,10 @@
 
     $('#ts').parent().parent().hide();
     $('#percentage').parent().parent().hide();
+
+
+
+
 
     $('.cal').on('keyup change', function(e) {
 
