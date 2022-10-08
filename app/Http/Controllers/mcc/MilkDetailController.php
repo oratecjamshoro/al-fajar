@@ -50,9 +50,9 @@ class MilkDetailController extends Controller
             'fat' => 'required',
             'lr' => 'required',
             'snf' => 'required',
-            'id' => 'required'
+            'id' => 'required',
+            'temperature' => 'required'
         ]);
-
 
         if(!$mcc = MCC::where('mcci_id',Auth::user()->id)->first('id'))
         {
@@ -70,6 +70,7 @@ class MilkDetailController extends Controller
         $milk->snf = $request->snf;
         $milk->percentage = $request->percentage;
         $milk->ts = $request->ts;
+        $milk->temperature = $request->temperature;
         $milk->mcc_id = $mcc->id;
         $milk->save();
         

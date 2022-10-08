@@ -19,7 +19,20 @@
                                             <li class="breadcrumb-item active">Today List</li>
                                         </ol>
                                     </div>
-                                    <h4 class="page-title">Add Milk</h4>
+                                    <h4 class="page-title">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                Add Milk
+                                            </div>
+                                            <div class="col-md-4">
+                                                <select class="form-control" id="change_shift">
+                                                    <option value="">Select Shift</option>
+                                                    <option>Morning</option>
+                                                    <option>Evening</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </h4>
                                 </div>
                             </div>
                         </div>     
@@ -71,36 +84,6 @@
                     </div> <!-- end container-fluid -->
 
                 </div> <!-- end content -->
-
-                <div id="shift" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                <h4 class="modal-title">Modal Content is Responsive</h4>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <button type="button" class="btn btn-primary shift" value="Morning">Morning</button>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <button type="button" class="btn btn-info shift" value="Evening">Evening</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-info waves-effect waves-light">Save changes</button>
-                            </div> -->
-                        </div>
-                    </div>
-                </div><!-- /.modal -->
-
 @endsection
 
 @section('style')
@@ -108,6 +91,7 @@
 <link href="assets/libs/datatables/dataTables.bootstrap4.css" rel="stylesheet" type="text/css" />
 <link href="assets/libs/datatables/buttons.bootstrap4.css" rel="stylesheet" type="text/css" />
 <link href="assets/libs/datatables/responsive.bootstrap4.css" rel="stylesheet" type="text/css" />
+
 @endsection
 
 @section('script')
@@ -132,20 +116,48 @@
 <!-- Datatables init -->
 <script src="assets/js/pages/datatables.init.js"></script>
 
+
 <script>
-    if(!localStorage.shift)
-    {
-        //$('#shift').modal('show');
-    }
 
-    $('#shift').modal('show');
-
-    $('.shift').click(function(){
+    $('#change_shift').change(function(){
         var shift = $(this).val();
-        localStorage.shift = shift;
-        document.cookie = "shift="+shift;
-        $('#shift').modal('hide');
-    });
+
+        Swal.fire({
+            title:"Are you sure?",
+            text:"You want to change shift!",
+            type:"warning",
+            showCancelButton:!0,
+            confirmButtonColor:"#3085d6",
+            cancelButtonColor:"#d33",
+            confirmButtonText:"Yes, change it!"
+        }).then(function(t)
+        {
+            if(t.value)
+            {
+                if(shift)
+                {
+                    localStorage.shift = shift;
+                    document.cookie = "shift="+shift;
+                    Swal.fire("Shift!","Your shift has been changed.","success")
+                }
+                else
+                {
+                    localStorage.clear();
+                    Swal.fire("Sorry!","Select your shift!.","warning")
+                }
+            }
+            else
+            {
+                $("#change_shift").val(localStorage.shift);
+            }
+            
+        })   
+    })
+
+    if(localStorage.shift)
+    {
+        $("#change_shift").val(localStorage.shift);
+    }
 </script>
 @endsection
 

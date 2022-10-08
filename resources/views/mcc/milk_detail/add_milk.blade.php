@@ -128,7 +128,7 @@
                                                 <div class="form-group">
                                                     <label>Temperature</label>
                                                     <input type="text" name="temperature" parsley-trigger="change" required
-                                                        placeholder="Enter Temperature" class="form-control cal">
+                                                        placeholder="Enter Temperature" class="form-control">
                                                 </div>
                                             </div>
                                         </div>    
@@ -165,14 +165,21 @@
 <script src="{{asset('assets/js/pages/form-masks.init.js')}}"></script>
 
 <script>
+
     if(localStorage.shift)
     {
         $('#shift').html(localStorage.shift);
     }
     else
     {
-        alert('Please go back and select Shift');
-        history.back();
+        Swal.fire({
+            title:"Sorry",
+            text:"Please go back and select Shift!",
+            type:"warning",
+        }).then(function(t){
+            history.back();
+        })
+        
     }
 
     $('#ts').parent().parent().hide();

@@ -42,6 +42,8 @@
                                                 <th>SNF</th>
                                                 <th>6%</th>
                                                 <th>TS</th>
+                                                <th>Temperature</th>
+                                                <th>Action</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -52,6 +54,8 @@
                                                 $snf=0;
                                                 $percentage=0;
                                                 $ts=0;
+                                                $temperature=0;
+                                                $sr = 1;
                                             ?>
                                             @foreach($received_milk as $val)
                                             <?php
@@ -61,9 +65,10 @@
                                                 $snf +=$val->snf;
                                                 $percentage +=$val->percentage;
                                                 $ts +=$val->ts;
+                                                $temperature +=$val->temperature;
                                             ?>
                                                 <tr>
-                                                    <td>{{$val->id}}</td>
+                                                    <td>{{$sr++}}</td>
                                                     <td>{{$val->tarif_chanal}}</td>
                                                     <td>{{$val->shift}}</td>
                                                     <td>{{$val->supplierdata->name}}</td>
@@ -73,10 +78,31 @@
                                                     <td>{{round($val->snf,2)}}</td>
                                                     <td>{{round($val->percentage,2)}}</td>
                                                     <td>{{round($val->ts,2)}}</td>
+                                                    <td>{{$val->temperature}}</td>
+                                                    <td><a href="#" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></a></td>
                                                 </tr>
                                             @endforeach
                                             </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th colspan="4">Average</th>
+                                                    <th>{{$gv}}</th>
+                                                    <th>{{$fat}}</th>
+                                                    <th>{{$lr}}</th>
+                                                    <th>{{round($snf,2)}}</th>
+                                                    <th>{{round($percentage,2)}}</th>
+                                                    <th>{{round($ts,2)}}</th>
+                                                    <th>{{round($temperature,2)}}</th>
+                                                    <th></th>
+                                                </tr>
+                                            </tfoot>
                                         </table>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <button class="btn btn-success sheet-close">Close Sheet</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -146,5 +172,27 @@
 <!-- Datatables init -->
 <script src="assets/js/pages/datatables.init.js"></script>
 
-@endsection
+<script>
 
+$('.sheet-close').click(function(){
+    Swal.fire({
+        title:"Are you sure?",
+        text:"Do you want to close sheet?",
+        type:"warning",
+        showCancelButton:!0,
+        confirmButtonColor:"#3085d6",
+        cancelButtonColor:"#d33",
+        confirmButtonText:"Yes, close it!"
+    }).then(function(t)
+    {
+        if(t.value)
+        {
+            Swal.fire("Closed!","Your sheet has been closed.","success")
+        }
+    })
+})
+
+
+</script>
+
+@endsection
