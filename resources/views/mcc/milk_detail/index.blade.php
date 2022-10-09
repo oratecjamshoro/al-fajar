@@ -150,7 +150,6 @@
             {
                 $("#change_shift").val(localStorage.shift);
             }
-            
         })   
     })
 

@@ -47,6 +47,8 @@ Route::middleware([
     // MCC Routes
     Route::resource('milk_detail','App\Http\Controllers\mcc\MilkDetailController');
     Route::get('received_milk',[MilkDetailController::class,'received_milk'])->name('received_milk');
+    Route::get('close_sheet',[MilkDetailController::class,'close_sheet'])->name('close_sheet');
+    
 
 });
 

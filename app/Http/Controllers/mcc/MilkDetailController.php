@@ -7,6 +7,7 @@ use App\Models\MCC;
 use App\Models\Supplier;
 use App\Models\MilkDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -89,6 +90,29 @@ class MilkDetailController extends Controller
         return view('mcc.milk_detail.received_milk',compact('received_milk'));
     }
 
+    public function close_sheet()
+    {
+
+        if(!$mcc = MCC::where('mcci_id',Auth::user()->id)->first('id'))
+        {
+            return 'You have not assign any MCC';
+        }
+
+        $total_milk = MilkDetail::select(
+            DB::raw("SUM(gv) as gv"),
+            DB::raw("SUM(fat) as fat"),
+            DB::raw("SUM(lr) as lr"),
+            DB::raw("SUM(snf) as snf"),
+            DB::raw("SUM(percentage) as percentage"),
+            DB::raw("SUM(ts) as ts"),
+            DB::raw("SUM(temperature) as temperature")
+            )->whereDate('created_at', Carbon::today())->where('mcc_id',$mcc->id)->first();
+
+            return view('mcc.milk_detail.close_sheet',compact('total_milk'));
+
+        
+    }
+
     /**
      * Display the specified resource.
      *
@@ -134,4 +158,5 @@ class MilkDetailController extends Controller
     {
         //
     }
+
 }

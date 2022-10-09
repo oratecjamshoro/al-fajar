@@ -84,8 +84,8 @@
                                             @endforeach
                                             </tbody>
                                             <tfoot>
-                                                <tr>
-                                                    <th colspan="4">Average</th>
+                                                <tr class="system_gen">
+                                                    <th colspan="4">System Generated Total</th>
                                                     <th>{{$gv}}</th>
                                                     <th>{{$fat}}</th>
                                                     <th>{{$lr}}</th>
@@ -93,6 +93,28 @@
                                                     <th>{{round($percentage,2)}}</th>
                                                     <th>{{round($ts,2)}}</th>
                                                     <th>{{round($temperature,2)}}</th>
+                                                    <th></th>
+                                                </tr>
+                                                <tr class="rem">
+                                                    <th colspan="4">Gain/Loss</th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                </tr>
+                                                <tr>
+                                                    <th colspan="4">MCC Total</th>
+                                                    <th><input type="text" name="gv" class="form-control cal" parsley-trigger="change" required></th>
+                                                    <th><input type="text" name="fat" class="form-control cal" parsley-trigger="change" required></th>
+                                                    <th><input type="text" name="lr" class="form-control cal" parsley-trigger="change" required></th>
+                                                    <th><input type="text" name="snf" class="form-control cal" parsley-trigger="change" required></th>
+                                                    <th><input type="text" name="percentage" class="form-control cal" parsley-trigger="change" required></th>
+                                                    <th><input type="text" name="ts" class="form-control cal" parsley-trigger="change" required></th>
+                                                    <th><input type="text" name="temperature" class="form-control cal" parsley-trigger="change" required></th>
                                                     <th></th>
                                                 </tr>
                                             </tfoot>
@@ -111,35 +133,6 @@
                     </div> <!-- end container-fluid -->
 
                 </div> <!-- end content -->
-
-                <div id="shift" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                <h4 class="modal-title">Modal Content is Responsive</h4>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <button type="button" class="btn btn-primary shift" value="Morning">Morning</button>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <button type="button" class="btn btn-info shift" value="Evening">Evening</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-info waves-effect waves-light">Save changes</button>
-                            </div> -->
-                        </div>
-                    </div>
-                </div><!-- /.modal -->
 
 @endsection
 
@@ -187,11 +180,43 @@ $('.sheet-close').click(function(){
     {
         if(t.value)
         {
-            Swal.fire("Closed!","Your sheet has been closed.","success")
+            window.location.href = "{{ route('close_sheet')}}";
+            //Swal.fire("Closed!","Your sheet has been closed.","success")
         }
     })
 })
 
+$('.cal').keyup(function(){
+    var gv = $('input[name=gv]').val();
+    var fat = $('input[name=fat]').val();
+    var lr = $('input[name=lr]').val();
+    var snf = $('input[name=snf]').val();
+    var percentage = $('input[name=percentage]').val();
+    var ts = $('input[name=ts]').val();
+    var temp = $('input[name=temperature]').val();
+
+    var sys_gv = $('.system_gen').children('th').eq(1).text();
+    $('.rem').children('th').eq(1).text(gv-sys_gv);
+    
+    var sys_fat = $('.system_gen').children('th').eq(2).text();
+    $('.rem').children('th').eq(2).text(fat-sys_fat);
+    
+    var sys_lr = $('.system_gen').children('th').eq(3).text();
+    $('.rem').children('th').eq(3).text(lr-sys_lr);
+    
+    var sys_snf = $('.system_gen').children('th').eq(4).text();
+    $('.rem').children('th').eq(4).text(snf-sys_snf);
+
+    var sys_percentage = $('.system_gen').children('th').eq(5).text();
+    $('.rem').children('th').eq(5).text(percentage-sys_percentage);
+    
+    var sys_ts = $('.system_gen').children('th').eq(6).text();
+    $('.rem').children('th').eq(6).text(ts-sys_ts);
+    
+    var sys_temp = $('.system_gen').children('th').eq(7).text();
+    $('.rem').children('th').eq(7).text(temp-sys_temp);
+    
+});
 
 </script>
 
