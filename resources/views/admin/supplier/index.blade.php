@@ -55,7 +55,7 @@
                                                 <td>{{$supplier->name}}</td>
                                                 <td>{{$supplier->father_name}}</td>
                                                 <td>{{$supplier->contact}}</td>
-                                                <td>{{$supplier->status}}</td>
+                                                <td>{{get_status($supplier->status)}}</td>
                                                 <td>
                                                     
                                                     <a class="btn btn-success btn-xs" href="{{ route('supplier.show',$supplier->id) }}">
