@@ -16,18 +16,27 @@
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
-                                            <li class="breadcrumb-item active">Items</li>
+                                            <li class="breadcrumb-item active">Today List</li>
                                         </ol>
                                     </div>
-                                    <h4 class="page-title">Items</h4>
+                                    <h4 class="page-title">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                Add Milk
+                                            </div>
+                                            <div class="col-md-4">
+                                                <select class="form-control" id="change_shift">
+                                                    <option value="">Select Shift</option>
+                                                    <option>Morning</option>
+                                                    <option>Evening</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </h4>
                                 </div>
                             </div>
                         </div>     
                         <!-- end page title --> 
-
-                            <a href="{{ route('inv_item.create') }}" class="btn btn-success mb-2">
-                              <i class="fa fa-plus"></i> Add Item
-                            </a>
 
                             <div class="row">
                                 <div class="col-12">
@@ -37,8 +46,9 @@
                                             <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Name</th>
-                                                <th>Category</th>
+                                                <th>Branch Code</th>
+                                                <th>MCC Name</th>
+                                                <th>Contact</th>
                                                 <th>status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -46,23 +56,18 @@
     
     
                                             <tbody>
-                                            @foreach($items as $item)
+                                            <?php $a=1; ?>
+                                            @foreach($mccs as $mcc)
                                             <tr>
-                                                <td>{{$item->id}}</td>
-                                                <td>{{$item->item_name}}</td>
-                                                <td>{{$item->getCategory->title}}</td>
-                                                <td>{{get_status($item->status)}}</td>
+                                                <td>{{$a++}}</td>
+                                                <td>{{$mcc->branch_code}}</td>
+                                                <td>{{$mcc->branch_name}}</td>
+                                                <td>{{$mcc->phone}}</td>
+                                                <td>{{get_status($mcc->status)}}</td>
                                                 <td>
-                                                    <a class="btn btn-success btn-xs" href="{{ route('mcc.show',$item->id) }}">
-                                                        <i class="fas fa-check-square"></i>
+                                                    <a class="btn btn-success btn-xs" href="{{route('mmt_today_list.show',$mcc->id) }}">
+                                                        Add Milk
                                                     </a>
-                                                    <a class="btn btn-warning btn-xs" href="{{ route('mcc.edit',$item->id) }}">
-                                                        <i class="far fa-edit"></i>
-                                                    </a>
-                                                        {!! Form::open(['method' => 'DELETE','route' => ['mcc.destroy', $item->id],'style'=>'display:inline']) !!}
-                                                            {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs'] )  !!}
-                                                        {!! Form::close() !!}
-
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -76,8 +81,6 @@
                     </div> <!-- end container-fluid -->
 
                 </div> <!-- end content -->
-
-
 @endsection
 
 @section('style')
@@ -85,6 +88,7 @@
 <link href="assets/libs/datatables/dataTables.bootstrap4.css" rel="stylesheet" type="text/css" />
 <link href="assets/libs/datatables/buttons.bootstrap4.css" rel="stylesheet" type="text/css" />
 <link href="assets/libs/datatables/responsive.bootstrap4.css" rel="stylesheet" type="text/css" />
+
 @endsection
 
 @section('script')
@@ -109,4 +113,47 @@
 <!-- Datatables init -->
 <script src="assets/js/pages/datatables.init.js"></script>
 
+
+<script>
+
+    $('#change_shift').change(function(){
+        var shift = $(this).val();
+
+        Swal.fire({
+            title:"Are you sure?",
+            text:"You want to change shift!",
+            type:"warning",
+            showCancelButton:!0,
+            confirmButtonColor:"#3085d6",
+            cancelButtonColor:"#d33",
+            confirmButtonText:"Yes, change it!"
+        }).then(function(t)
+        {
+            if(t.value)
+            {
+                if(shift)
+                {
+                    localStorage.shift = shift;
+                    document.cookie = "shift="+shift;
+                    Swal.fire("Shift!","Your shift has been changed.","success")
+                }
+                else
+                {
+                    localStorage.clear();
+                    Swal.fire("Sorry!","Select your shift!.","warning")
+                }
+            }
+            else
+            {
+                $("#change_shift").val(localStorage.shift);
+            }
+        })   
+    })
+
+    if(localStorage.shift)
+    {
+        $("#change_shift").val(localStorage.shift);
+    }
+</script>
 @endsection
+

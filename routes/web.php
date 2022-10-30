@@ -49,9 +49,9 @@ Route::middleware([
     Route::get('received_milk',[MilkDetailController::class,'received_milk'])->name('received_milk');
     Route::get('close_sheet',[MilkDetailController::class,'close_sheet'])->name('close_sheet');
 
-
     // MMT Routes
-    Route::get('mmt/milk_detail','App\Http\Controllers\mmt\MilkDetailController@index')->name('today_list'); 
+    Route::get('mmt_today_list','App\Http\Controllers\mmt\MilkDetailController@index')->name('mmt_today_list');
+    Route::get('mmt_today_list/show/{id}','App\Http\Controllers\mmt\MilkDetailController@show')->name('mmt_today_list.show'); 
 });
 
 

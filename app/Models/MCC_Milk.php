@@ -31,4 +31,13 @@ class MCC_Milk extends Model
             $model->user_id = auth()->id();
         });
     }
+
+    public function getMCC()
+    {
+        return $this->hasOne('App\Models\MCC','id','mcc_id');
+    }
+    public function getUser()
+    {
+        return $this->hasOne('App\Models\User','id','user_id');
+    }
 }

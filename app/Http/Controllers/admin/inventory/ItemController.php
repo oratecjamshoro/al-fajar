@@ -16,8 +16,7 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $items= Inv_Item::all();
-        
+        $items= Inv_Item::with('getCategory')->get();
         return view('admin.inventory.items.index',compact('items'));
     }
 

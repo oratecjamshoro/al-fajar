@@ -21,8 +21,6 @@ class MilkDetailController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->roles->pluck('name')[0] == "MMT"){ return redirect('mmt/milk_detail'); }
-
         $suppliers_id = MilkDetail::whereDate('created_at', Carbon::today())->pluck('supplier')->unique();
 
         $mcc = MCC::where('mcci_id',Auth::user()->id)->first('id');
@@ -100,21 +98,52 @@ class MilkDetailController extends Controller
             return 'You have not assign any MCC';
         }
 
-        $total_milk = MilkDetail::select(
-            DB::raw("SUM(gv) as gv"),
-            DB::raw("avg(fat) as fat"),
-            DB::raw("avg(lr) as lr"),
-            DB::raw("avg(snf) as snf"),
-            DB::raw("avg(percentage) as percentage"),
-            DB::raw("avg(ts) as ts"),
-            DB::raw("avg(temperature) as temperature")
-            )->whereDate('created_at', Carbon::today())->where(['mcc_id'=>$mcc->id,'status'=>0])->first();
-        //return $total_milk;
+        $total_milk = MilkDetail::select()->whereDate('created_at', Carbon::today())->where(['mcc_id'=>$mcc->id,'status'=>0])->get();
 
-        $left_over = MCC_Milk::select('*')->whereDate('created_at', Carbon::today())->where(['mcc_id'=>$mcc->id,'status'=>0,'type'=>'left over'])->get();
+        if(count($total_milk) >0)
+        {
+            $gv = 0;
+            $fat = 0;
+            $lr = 0;
+            $snf = 0;
+            $per = 0;
+            $ts = 0;
+            $temp = 0;
 
-        return "we are working on this";
+            foreach($total_milk as $val)
+            {
+                $gv +=$val->gv;
+                $fat +=$val->fat*$val->gv;
+                $lr +=$val->lr*$val->gv;
+                $snf +=$val->snf*$val->gv;
+                $per +=$val->percentage;
+                $ts +=$val->ts;
+                $temp +=$val->temperature*$val->gv;
+            }
+            
+            $left_over = MCC_Milk::select('*')->whereDate('created_at', Carbon::today())->where(['mcc_id'=>$mcc->id,'status'=>0,'type'=>'left over'])->get();
 
+            $mmc_milk = new MCC_Milk;
+            $mmc_milk['gv'] = $gv;
+            $mmc_milk['fat'] = $fat/$gv;
+            $mmc_milk['lr'] = $lr/$gv;
+            $mmc_milk['snf'] = $snf/$gv;
+            $mmc_milk['percentage'] = $per;
+            $mmc_milk['ts'] = $ts;
+            $mmc_milk['temperature'] = $temp/$gv;
+            $mmc_milk['type'] = 'Collaction';
+            $mmc_milk['date'] = date("Y-m-d");
+            $mmc_milk['mcc_id'] = $mcc->id; 
+            $mmc_milk->save();
+
+            MilkDetail::where(['mcc_id'=>$mcc->id,'status'=>0])->whereDate('created_at', Carbon::today())->update(['status'=>1]);
+
+            return redirect('received_milk')->with('success',"Sheet closed successfully");
+        }
+        else
+        {
+            return redirect('received_milk')->with('error',"Sheet is empty");
+        }
     }
 
     /**

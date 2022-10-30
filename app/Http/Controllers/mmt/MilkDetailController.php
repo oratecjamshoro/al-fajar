@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\mmt;
 
-use App\Http\Controllers\Controller;
+use App\Models\MCC;
+use App\Models\MCC_Milk;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use App\Http\Controllers\Controller;
 
 class MilkDetailController extends Controller
 {
@@ -14,7 +17,10 @@ class MilkDetailController extends Controller
      */
     public function index()
     {
-        return "MMT";
+        $mcc_id = MCC_Milk::where(['type'=>'Collaction','status'=>0])->whereDate('created_at', Carbon::today())->pluck('mcc_id')->unique();
+        $mccs = MCC::get()->whereIn('id',$mcc_id);
+        
+        return view('mmt.milk_detail.index',compact('mccs'));
     }
 
     /**
@@ -46,7 +52,8 @@ class MilkDetailController extends Controller
      */
     public function show($id)
     {
-        //
+        return $mcc = MCC_Milk::where('mcc_id',$id)->first();   
+        return view('mmt.milk_detail.add_milk',compact('mcc'));
     }
 
     /**

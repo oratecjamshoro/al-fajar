@@ -195,8 +195,17 @@
                                     <span>Dashboard</span>
                                 </a>
                             </li>
-
-                            @can('today-access')
+                        @if(Auth::user()->roles->pluck('name')[0]=="MMT")
+                            @can('today-list-access')
+                            <li>
+                                <a href="{{Route('mmt_today_list')}}">
+                                    <i class="fe-airplay"></i>
+                                    <span>Today List</span>
+                                </a>
+                            </li>
+                            @endcan
+                        @else
+                            @can('today-list-access')
                             <li>
                                 <a href="{{Route('milk_detail.index')}}">
                                     <i class="fe-airplay"></i>
@@ -204,6 +213,7 @@
                                 </a>
                             </li>
                             @endcan
+                        @endif
                             
 
                             @can('mcc-access')
@@ -234,14 +244,6 @@
                             </li>
                             @endcan
                             
-                            @can('today-list-access')
-                            <li>
-                                <a href="{{Route('milk_detail.index')}}">
-                                    <i class="fe-airplay"></i>
-                                    <span>Today list</span>
-                                </a>
-                            </li>
-                            @endcan
                             @can('received-milk-access')
                             <li>
                                 <a href="{{Route('received_milk')}}">
