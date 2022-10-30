@@ -19,7 +19,7 @@ class EmployeesController extends Controller
      */
     public function index()
     {
-        $employees= Employee::all();
+        $employees= Employee::with('getDesignation')->get();
         return view('admin.hr.employees.index',compact('employees'));
     }
 
@@ -46,13 +46,13 @@ class EmployeesController extends Controller
         $emp_code = rand(10000, 99999);
         $designation = Designation::where('id',$request->emp_designation)->first();
 
-        if($designation->designation == "MCCI")
+        if($designation->designation == "MCCI" || $designation->designation == "MMT")
         {
             $input = $request->all();
             $input['password'] = Hash::make($input['password']);
         
             $user = User::create($input);
-            $user->assignRole(['MCCI']);
+            $user->assignRole([$designation->designation]);
 
             $employee = new Employee;
             $employee->emp_name = $request->name;

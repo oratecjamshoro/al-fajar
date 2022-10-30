@@ -28,4 +28,9 @@ class Employee extends Model
             $model->user_id = auth()->id();
         });
     }
+    
+    public function getDesignation()
+    {
+        return $this->hasOne("App\Models\Designation",'id','emp_designation');
+    }
 }

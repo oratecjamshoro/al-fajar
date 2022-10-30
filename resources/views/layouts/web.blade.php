@@ -264,7 +264,7 @@
                             <li>
                                 <a href="{{Route('doodi.index')}}">
                                     <i class="fe-airplay"></i>
-                                    <span>Doodi</span>
+                                    <span>Z.A.K Dodhi</span>
                                 </a>
                             </li>
                             @endcan

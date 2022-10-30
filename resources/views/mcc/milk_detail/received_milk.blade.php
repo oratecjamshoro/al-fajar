@@ -2,7 +2,6 @@
 @section('title', 'Received Milk')
 @section('content')
 
-
 <div class="content-page">
                 <div class="content">
                     
@@ -43,11 +42,11 @@
                                                 <th>6%</th>
                                                 <th>TS</th>
                                                 <th>Temperature</th>
-                                                <th>Action</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <?php
+                                                $sr=0;
                                                 $gv=0;
                                                 $fat=0;
                                                 $lr=0;
@@ -55,20 +54,20 @@
                                                 $percentage=0;
                                                 $ts=0;
                                                 $temperature=0;
-                                                $sr = 1;
+                                                
                                             ?>
                                             @foreach($received_milk as $val)
                                             <?php
                                                 $gv +=$val->gv;
-                                                $fat +=$val->fat;
-                                                $lr +=$val->lr;
-                                                $snf +=$val->snf;
+                                                $fat +=$val->fat*$val->gv;
+                                                $lr +=$val->lr*$val->gv;
+                                                $snf +=$val->snf*$val->gv;
                                                 $percentage +=$val->percentage;
                                                 $ts +=$val->ts;
-                                                $temperature +=$val->temperature;
+                                                $temperature +=$val->temperature*$val->gv;
                                             ?>
                                                 <tr>
-                                                    <td>{{$sr++}}</td>
+                                                    <td>{{++$sr}}</td>
                                                     <td>{{$val->tarif_chanal}}</td>
                                                     <td>{{$val->shift}}</td>
                                                     <td>{{$val->supplierdata->name}}</td>
@@ -79,43 +78,39 @@
                                                     <td>{{round($val->percentage,2)}}</td>
                                                     <td>{{round($val->ts,2)}}</td>
                                                     <td>{{$val->temperature}}</td>
-                                                    <td><a href="#" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></a></td>
                                                 </tr>
                                             @endforeach
                                             </tbody>
                                             <tfoot>
-                                                <tr class="system_gen">
-                                                    <th colspan="4">System Generated Total</th>
+                                                <tr>
+                                                    <th colspan="4">TOTAL</th>
                                                     <th>{{$gv}}</th>
-                                                    <th>{{$fat}}</th>
-                                                    <th>{{$lr}}</th>
-                                                    <th>{{round($snf,2)}}</th>
+                                                    <th>{{round($fat/$gv,2)}}</th>
+                                                    <th>{{round($lr/$gv,2)}}</th>
+                                                    <th>{{round($snf/$gv,2)}}</th>
                                                     <th>{{round($percentage,2)}}</th>
                                                     <th>{{round($ts,2)}}</th>
-                                                    <th>{{round($temperature,2)}}</th>
-                                                    <th></th>
-                                                </tr>
-                                                <tr class="rem">
-                                                    <th colspan="4">Gain/Loss</th>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th></th>
+                                                    <th>{{round($temperature/$gv,2)}}</th>
                                                 </tr>
                                                 <tr>
-                                                    <th colspan="4">MCC Total</th>
-                                                    <th><input type="text" name="gv" class="form-control cal" parsley-trigger="change" required></th>
-                                                    <th><input type="text" name="fat" class="form-control cal" parsley-trigger="change" required></th>
-                                                    <th><input type="text" name="lr" class="form-control cal" parsley-trigger="change" required></th>
-                                                    <th><input type="text" name="snf" class="form-control cal" parsley-trigger="change" required></th>
-                                                    <th><input type="text" name="percentage" class="form-control cal" parsley-trigger="change" required></th>
-                                                    <th><input type="text" name="ts" class="form-control cal" parsley-trigger="change" required></th>
-                                                    <th><input type="text" name="temperature" class="form-control cal" parsley-trigger="change" required></th>
-                                                    <th></th>
+                                                    <th colspan="4">LEFT OVER</th>
+                                                    <th>{{0}}</th>
+                                                    <th>{{0}}</th>
+                                                    <th>{{0}}</th>
+                                                    <th>{{0}}</th>
+                                                    <th>{{0}}</th>
+                                                    <th>{{0}}</th>
+                                                    <th>{{0}}</th>
+                                                </tr>
+                                                <tr>
+                                                    <th colspan="4">TOTAL</th>
+                                                    <th>{{$gv}}</th>
+                                                    <th>{{round($fat/$gv,2)}}</th>
+                                                    <th>{{round($lr/$gv,2)}}</th>
+                                                    <th>{{round($snf/$gv,2)}}</th>
+                                                    <th>{{round($percentage,2)}}</th>
+                                                    <th>{{round($ts,2)}}</th>
+                                                    <th>{{round($temperature/$gv,2)}}</th>
                                                 </tr>
                                             </tfoot>
                                         </table>
@@ -133,7 +128,6 @@
                     </div> <!-- end container-fluid -->
 
                 </div> <!-- end content -->
-
 @endsection
 
 @section('style')
@@ -185,38 +179,6 @@ $('.sheet-close').click(function(){
         }
     })
 })
-
-$('.cal').keyup(function(){
-    var gv = $('input[name=gv]').val();
-    var fat = $('input[name=fat]').val();
-    var lr = $('input[name=lr]').val();
-    var snf = $('input[name=snf]').val();
-    var percentage = $('input[name=percentage]').val();
-    var ts = $('input[name=ts]').val();
-    var temp = $('input[name=temperature]').val();
-
-    var sys_gv = $('.system_gen').children('th').eq(1).text();
-    $('.rem').children('th').eq(1).text(gv-sys_gv);
-    
-    var sys_fat = $('.system_gen').children('th').eq(2).text();
-    $('.rem').children('th').eq(2).text(fat-sys_fat);
-    
-    var sys_lr = $('.system_gen').children('th').eq(3).text();
-    $('.rem').children('th').eq(3).text(lr-sys_lr);
-    
-    var sys_snf = $('.system_gen').children('th').eq(4).text();
-    $('.rem').children('th').eq(4).text(snf-sys_snf);
-
-    var sys_percentage = $('.system_gen').children('th').eq(5).text();
-    $('.rem').children('th').eq(5).text(percentage-sys_percentage);
-    
-    var sys_ts = $('.system_gen').children('th').eq(6).text();
-    $('.rem').children('th').eq(6).text(ts-sys_ts);
-    
-    var sys_temp = $('.system_gen').children('th').eq(7).text();
-    $('.rem').children('th').eq(7).text(temp-sys_temp);
-    
-});
 
 </script>
 

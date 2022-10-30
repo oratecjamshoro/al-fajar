@@ -9,6 +9,7 @@ use App\Models\MilkDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\MCC_Milk;
 use Illuminate\Support\Facades\Auth;
 
 class MilkDetailController extends Controller
@@ -20,6 +21,8 @@ class MilkDetailController extends Controller
      */
     public function index()
     {
+        if(Auth::user()->roles->pluck('name')[0] == "MMT"){ return redirect('mmt/milk_detail'); }
+
         $suppliers_id = MilkDetail::whereDate('created_at', Carbon::today())->pluck('supplier')->unique();
 
         $mcc = MCC::where('mcci_id',Auth::user()->id)->first('id');
@@ -85,14 +88,13 @@ class MilkDetailController extends Controller
             return 'You have not assign any MCC';
         }
 
-        $received_milk = MilkDetail::whereDate('created_at', Carbon::today())->where('mcc_id',$mcc->id)->with('supplierdata')->get();
+        $received_milk = MilkDetail::whereDate('created_at', Carbon::today())->where(['mcc_id'=>$mcc->id,'status'=>0])->with('supplierdata')->get();
 
         return view('mcc.milk_detail.received_milk',compact('received_milk'));
     }
 
     public function close_sheet()
     {
-
         if(!$mcc = MCC::where('mcci_id',Auth::user()->id)->first('id'))
         {
             return 'You have not assign any MCC';
@@ -100,17 +102,19 @@ class MilkDetailController extends Controller
 
         $total_milk = MilkDetail::select(
             DB::raw("SUM(gv) as gv"),
-            DB::raw("SUM(fat) as fat"),
-            DB::raw("SUM(lr) as lr"),
-            DB::raw("SUM(snf) as snf"),
-            DB::raw("SUM(percentage) as percentage"),
-            DB::raw("SUM(ts) as ts"),
-            DB::raw("SUM(temperature) as temperature")
-            )->whereDate('created_at', Carbon::today())->where('mcc_id',$mcc->id)->first();
+            DB::raw("avg(fat) as fat"),
+            DB::raw("avg(lr) as lr"),
+            DB::raw("avg(snf) as snf"),
+            DB::raw("avg(percentage) as percentage"),
+            DB::raw("avg(ts) as ts"),
+            DB::raw("avg(temperature) as temperature")
+            )->whereDate('created_at', Carbon::today())->where(['mcc_id'=>$mcc->id,'status'=>0])->first();
+        //return $total_milk;
 
-            return view('mcc.milk_detail.close_sheet',compact('total_milk'));
+        $left_over = MCC_Milk::select('*')->whereDate('created_at', Carbon::today())->where(['mcc_id'=>$mcc->id,'status'=>0,'type'=>'left over'])->get();
 
-        
+        return "we are working on this";
+
     }
 
     /**
