@@ -52,8 +52,9 @@ class MilkDetailController extends Controller
      */
     public function show($id)
     {
-        return $mcc = MCC_Milk::where('mcc_id',$id)->whereDate('created_at', Carbon::today())->first();   
-        return view('mmt.milk_detail.add_milk',compact('mcc'));
+        $mcc = MCC::where('id',$id)->first();
+        $mcc_milk = MCC_Milk::where('mcc_id',$id)->whereDate('created_at', Carbon::today())->first();   
+        return view('mmt.milk_detail.add_milk',compact('mcc','mcc_milk'));
     }
 
     /**

@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('m_c_c__milks', function (Blueprint $table) {
             $table->id();
+            $table->string('shift');
             $table->string('gv');
             $table->string('fat');
             $table->string('lr');
