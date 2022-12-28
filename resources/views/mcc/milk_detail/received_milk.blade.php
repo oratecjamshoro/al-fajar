@@ -92,25 +92,44 @@
                                                     <th>{{($gv>0)?round($ts,2):0}}</th>
                                                     <th>{{($gv>0)?round($temperature/$gv,2):0}}</th>
                                                 </tr>
+                                                <?php
+                                                $l_gv=0;
+                                                $l_fat=0;
+                                                $l_lr=0;
+                                                $l_snf=0;
+                                                $l_per=0;
+                                                $l_ts=0;
+                                                $l_temp=0;
+                                                foreach ($left_over as $left)
+                                                {
+                                                    $l_gv +=$left->gv;
+                                                    $l_fat +=$left->fat;
+                                                    $l_lr +=$left->lr;
+                                                    $l_snf +=$left->snf;
+                                                    $l_per +=$left->percentage;
+                                                    $l_ts +=$left->ts;
+                                                    $l_temp +=$left->temperature;
+                                                }
+                                                ?>
                                                 <tr>
                                                     <th colspan="4">LEFT OVER</th>
-                                                    <th>{{0}}</th>
-                                                    <th>{{0}}</th>
-                                                    <th>{{0}}</th>
-                                                    <th>{{0}}</th>
-                                                    <th>{{0}}</th>
-                                                    <th>{{0}}</th>
-                                                    <th>{{0}}</th>
+                                                    <th>{{round($l_gv,2)}}</th>
+                                                    <th>{{round($l_fat,2)}}</th>
+                                                    <th>{{round($l_lr,2)}}</th>
+                                                    <th>{{round($l_snf,2)}}</th>
+                                                    <th>{{round($l_per,2)}}</th>
+                                                    <th>{{round($l_ts,2)}}</th>
+                                                    <th>{{round($l_temp,2)}}</th>
                                                 </tr>
                                                 <tr>
                                                     <th colspan="4">TOTAL</th>
-                                                    <th>{{$gv}}</th>
-                                                    <th>{{($gv>0)?round($fat/$gv,2):0}}</th>
-                                                    <th>{{($gv>0)?round($lr/$gv,2):0}}</th>
-                                                    <th>{{($gv>0)?round($snf/$gv,2):0}}</th>
-                                                    <th>{{($gv>0)?round($percentage,2):0}}</th>
-                                                    <th>{{($gv>0)?round($ts,2):0}}</th>
-                                                    <th>{{($gv>0)?round($temperature/$gv,2):0}}</th>
+                                                    <th>{{$gv +=$l_gv}}</th>
+                                                    <th>{{($gv>0)?round(($fat+$l_fat)/$gv,2):0}}</th>
+                                                    <th>{{($gv>0)?round(($lr+$l_lr)/$gv,2):0}}</th>
+                                                    <th>{{($gv>0)?round(($snf+$l_snf)/$gv,2):0}}</th>
+                                                    <th>{{($gv>0)?round(($percentage+$l_per),2):0}}</th>
+                                                    <th>{{($gv>0)?round(($ts+$l_ts),2):0}}</th>
+                                                    <th>{{($gv>0)?round(($temperature+$l_temp)/$gv,2):0}}</th>
                                                 </tr>
                                             </tfoot>
                                         </table>

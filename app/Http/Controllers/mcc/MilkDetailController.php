@@ -87,8 +87,9 @@ class MilkDetailController extends Controller
         }
 
         $received_milk = MilkDetail::whereDate('created_at', Carbon::today())->where(['mcc_id'=>$mcc->id,'status'=>0])->with('supplierdata')->get();
+        $left_over = MCC_Milk::where(['mcc_id'=>$mcc->id,'status'=>0,'type'=>'left over'])->get();
 
-        return view('mcc.milk_detail.received_milk',compact('received_milk'));
+        return view('mcc.milk_detail.received_milk',compact('received_milk','left_over'));
     }
 
     public function close_sheet()
@@ -121,22 +122,43 @@ class MilkDetailController extends Controller
                 $temp +=$val->temperature*$val->gv;
             }
             
-            $left_over = MCC_Milk::select('*')->whereDate('created_at', Carbon::today())->where(['mcc_id'=>$mcc->id,'status'=>0,'type'=>'left over'])->get();
+            $left_over = MCC_Milk::where(['mcc_id'=>$mcc->id,'status'=>0,'type'=>'left over'])->get();
+            $l_gv = 0;
+            $l_fat = 0;
+            $l_lr = 0;
+            $l_snf = 0;
+            $l_per = 0;
+            $l_ts = 0;
+            $l_temp = 0;
+
+            foreach($left_over as $val2)
+            {
+                $l_gv +=$val2->gv;
+                $l_fat +=$val2->fat;
+                $l_lr +=$val2->lr;
+                $l_snf +=$val2->snf;
+                $l_per +=$val2->percentage;
+                $l_ts +=$val2->ts;
+                $l_temp +=$val2->temperature;
+            }
+
 
             $mmc_milk = new MCC_Milk;
-            $mmc_milk['gv'] = $gv;
-            $mmc_milk['fat'] = $fat/$gv;
-            $mmc_milk['lr'] = $lr/$gv;
-            $mmc_milk['snf'] = $snf/$gv;
-            $mmc_milk['percentage'] = $per;
-            $mmc_milk['ts'] = $ts;
-            $mmc_milk['temperature'] = $temp/$gv;
+            $mmc_milk['gv'] = ($gv+$l_gv);
+            $mmc_milk['fat'] = ($fat+$l_fat)/$gv;
+            $mmc_milk['lr'] = ($lr+$l_lr)/$gv;
+            $mmc_milk['snf'] = ($snf+$l_snf)/$gv;
+            $mmc_milk['percentage'] = ($per+$l_per);
+            $mmc_milk['ts'] = ($ts+$l_ts);
+            $mmc_milk['temperature'] = ($temp+$l_temp)/$gv;
+            $mmc_milk['shift'] = $_COOKIE['shift'];
             $mmc_milk['type'] = 'Collaction';
             $mmc_milk['date'] = date("Y-m-d");
             $mmc_milk['mcc_id'] = $mcc->id; 
             $mmc_milk->save();
 
             MilkDetail::where(['mcc_id'=>$mcc->id,'status'=>0])->whereDate('created_at', Carbon::today())->update(['status'=>1]);
+            MCC_Milk::where(['mcc_id'=>$mcc->id,'status'=>0,'type'=>'left over'])->update(['status'=>1]);
 
             return redirect('received_milk')->with('success',"Sheet closed successfully");
         }

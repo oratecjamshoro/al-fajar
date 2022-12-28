@@ -67,6 +67,8 @@
                                             {{$mcc->address}}
                                         </div>
                                     </div>
+                                    <form action="{{Route('mmt_milk.store')}}" method="post" enctype="multipart/form-data" class="parsley-examples" novalidate="">
+                                    @csrf
                                     <div class="row">
                                         <div class="col-12">
                                             <table class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
@@ -94,17 +96,7 @@
                                                         <td>{{round($mcc_milk->temperature,2)}}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td >Left Over</td>
-                                                        <td id="l_gv">0</td>
-                                                        <td id="l_fat">0</td>
-                                                        <td id="l_lr">0</td>
-                                                        <td id="l_snf">0</td>
-                                                        <td id="l_perc">0</td>
-                                                        <td id="l_ts">0</td>
-                                                        <td id="l_temp">0</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>MMT Total</td>
+                                                        <td>MMT Rec:</td>
                                                         <td>
                                                             <input type="text" name="gv" id="gv" parsley-trigger="change" required
                                                             placeholder="Enter G.V" class="form-control cal">
@@ -118,15 +110,15 @@
                                                             placeholder="Enter L.R" class="form-control cal">
                                                         </td>
                                                         <td>
-                                                            <input type="text" name="snf" id="snf" parsley-trigger="change" required
+                                                            <input type="text" id="snf-temp"
                                                             placeholder="Enter SNF" class="form-control cal" readonly>
                                                         </td>
                                                         <td>
-                                                            <input type="text" name="percentage" id="percentage" parsley-trigger="change" 
+                                                            <input type="text" id="percentage-temp" 
                                                             placeholder="Enter 6%" class="form-control" readonly>
                                                         </td>
                                                         <td>
-                                                            <input type="text" name="ts" id="ts" parsley-trigger="change" required
+                                                            <input type="text" id="ts-temp"
                                                             placeholder="Enter TS" class="form-control" readonly>
                                                         </td>
                                                         <td>
@@ -134,16 +126,99 @@
                                                             placeholder="Enter Temperature" class="form-control cal">
                                                         </td>
                                                     </tr>
+                                                    <tr>
+                                                        <td>Left Over</td>
+                                                        <td>
+                                                            <input type="text" name="lgv" id="lgv" parsley-trigger="change" required
+                                                            placeholder="Enter G.V" class="form-control cal">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" name="lfat" id="lfat" parsley-trigger="change" required
+                                                            placeholder="Enter FAT" class="form-control cal">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" name="llr" id="llr" parsley-trigger="change" required
+                                                            placeholder="Enter L.R" class="form-control cal">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" name="" id="lsnf-temp"
+                                                            placeholder="Enter SNF" class="form-control cal" readonly>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" id="lpercentage-temp" 
+                                                            placeholder="Enter 6%" class="form-control" readonly>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" id="lts-temp"
+                                                            placeholder="Enter TS" class="form-control" readonly>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" name="ltemperature" id="ltemp" parsley-trigger="change" required
+                                                            placeholder="Enter Temperature" class="form-control cal">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td >Loss/Gain</td>
+                                                        <td id="l_gv">0</td>
+                                                        <td id="l_fat">0</td>
+                                                        <td id="l_lr">0</td>
+                                                        <td id="l_snf">0</td>
+                                                        <td id="l_perc">0</td>
+                                                        <td id="l_ts">0</td>
+                                                        <td id="l_temp">0</td>
+                                                    </tr>
                                                 </tbody>
                                             </table>
-
+                                            <h5>Utility</h5>
                                             <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Generator Reading<span class="text-danger">*</span></label>
+                                                        <input type="text" name="generator_reading" parsley-trigger="change" required
+                                                            placeholder="Enter Generator Reading" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>WAPDA Reading<span class="text-danger">*</span></label>
+                                                        <input type="text" name="wapda_reading" parsley-trigger="change" required
+                                                            placeholder="Enter WAPDA Reading" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>SSGC Reading<span class="text-danger">*</span></label>
+                                                        <input type="text" name="ssgc_reading" parsley-trigger="change" required
+                                                            placeholder="Enter SSGC Reading" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-2">
+                                                <input type="hidden" name="snf" id="snf">
+                                                <input type="hidden" name="percentage" id="percentage">
+                                                <input type="hidden" name="ts" id="ts">
+                                                
+                                                <input type="hidden" name="lsnf" id="lsnf">
+                                                <input type="hidden" name="lpercentage" id="lpercentage">
+                                                <input type="hidden" name="lts" id="lts">
+                                                
+                                                <input type="hidden" name="glgv" id="glgv">
+                                                <input type="hidden" name="glfat" id="glfat">
+                                                <input type="hidden" name="gllr" id="gllr">
+                                                <input type="hidden" name="glsnf" id="glsnf">
+                                                <input type="hidden" name="glpercentage" id="glpercentage">
+                                                <input type="hidden" name="glts" id="glts">
+                                                <input type="hidden" name="gltemperature" id="gltemp">
+
+                                                <input type="hidden" name="mcc_id" value="{{$mcc->id}}">
+
                                                 <div class="col-md-12">
                                                     <button class="btn btn-success sheet-close">Close Sheet</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    </form>
                                 </div> <!-- end card-box -->
                             </div>
                             <!-- end col -->
@@ -216,19 +291,58 @@
         let perc = gv*fat/6;
         let ts = (fat+snf)*gv/13;
 
-        $('#snf').val((snf).toFixed(2));
-        $('#percentage').val((perc).toFixed(2));
-        $('#ts').val((ts).toFixed(2));
+        $('#snf').val(snf);
+        $('#percentage').val(perc);
+        $('#ts').val(ts);
 
-        let l_gv = "{{$mcc_milk->gv}}"-gv;
-        let l_fat = "{{$mcc_milk->fat}}"-fat;
-        let l_lr = "{{$mcc_milk->lr}}"-lr;
-        let l_snf = "{{$mcc_milk->snf}}"-snf
-        let l_perc = "{{$mcc_milk->percentage}}"-perc;
-        let l_ts = "{{$mcc_milk->ts}}"-ts;
-        let l_temp = "{{$mcc_milk->temperature}}"-temp;
+        $('#snf-temp').val((snf).toFixed(2));
+        $('#percentage-temp').val((perc).toFixed(2));
+        $('#ts-temp').val((ts).toFixed(2));
+
+
+
+        let lgv = ($('#lgv').val())?parseFloat($('#lgv').val()):0.00;
+        let lfat = ($('#lfat').val())?parseFloat($('#lfat').val()):0.00;
+        let llr = ($('#llr').val())?parseFloat($('#llr').val()):0.00;
+        let ltemp = ($('#ltemp').val())?parseFloat($('#ltemp').val()):0.00;
+
+        let lsnf = 0;
+
+        if(llr >0)
+        {
+            lsnf = ((llr/4)+(lfat*0.22+0.72));
+        }
+
+        let lperc = lgv*lfat/6;
+        let lts = (lfat+lsnf)*lgv/13;
+
+        $('#lsnf').val(lsnf);
+        $('#lpercentage').val(lperc);
+        $('#lts').val(lts);
+
+        $('#lsnf-temp').val((lsnf).toFixed(2));
+        $('#lpercentage-temp').val((lperc).toFixed(2));
+        $('#lts-temp').val((lts).toFixed(2));
+
+
+
+
+        let l_gv = (gv+lgv)-"{{$mcc_milk->gv}}";
+        let l_fat = (fat+lfat)-"{{$mcc_milk->fat}}";
+        let l_lr = (lr+llr)-"{{$mcc_milk->lr}}";
+        let l_snf = (snf+lsnf)-"{{$mcc_milk->snf}}";
+        let l_perc = (perc+lperc)-"{{$mcc_milk->percentage}}";
+        let l_ts = (ts+lts)-"{{$mcc_milk->ts}}";
+        let l_temp = (temp+ltemp)-"{{$mcc_milk->temperature}}";
         
-        
+        $('#glgv').val(l_gv);
+        $('#glfat').val(l_fat);
+        $('#gllr').val(l_lr);
+        $('#glsnf').val(l_snf);
+        $('#glpercentage').val(l_perc);
+        $('#glts').val(l_ts);
+        $('#gltemp').val(l_temp);
+
         $('#l_gv').html((l_gv).toFixed(2));
         $('#l_fat').html((l_fat).toFixed(2));
         $('#l_lr').html((l_lr).toFixed(2));

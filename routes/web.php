@@ -51,7 +51,8 @@ Route::middleware([
 
     // MMT Routes
     Route::get('mmt_today_list','App\Http\Controllers\mmt\MilkDetailController@index')->name('mmt_today_list');
-    Route::get('mmt_today_list/show/{id}','App\Http\Controllers\mmt\MilkDetailController@show')->name('mmt_today_list.show'); 
+    Route::get('mmt_today_list/show/{id}','App\Http\Controllers\mmt\MilkDetailController@show')->name('mmt_today_list.show');
+    Route::resource('mmt_milk','App\Http\Controllers\mmt\MilkDetailController');
 });
 
 

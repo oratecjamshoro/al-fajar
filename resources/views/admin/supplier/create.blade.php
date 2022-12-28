@@ -103,7 +103,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Status<span class="text-danger">*</span></label>
-                                                    {!! Form::select('status',['Active','Deactive'], null, ['class' => 'form-control','data-toggle'=>'select2']) !!}
+                                                    {!! Form::select('status',[1=>'Active',0=>'Deactive'], null, ['class' => 'form-control','data-toggle'=>'select2']) !!}
                                                 </div>
                                             </div>
                                         </div>
