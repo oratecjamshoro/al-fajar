@@ -21,7 +21,9 @@ class MilkDetailController extends Controller
      */
     public function index()
     {
-        $suppliers_id = MilkDetail::whereDate('created_at', Carbon::today())->pluck('supplier')->unique();
+        $shift = (isset($_COOKIE['shift']))?$_COOKIE['shift']:'';
+
+        $suppliers_id = MilkDetail::where('shift',$shift)->whereDate('created_at', Carbon::today())->pluck('supplier')->unique();
 
         $mcc = MCC::where('mcci_id',Auth::user()->id)->first('id');
         $suppliers = Supplier::where('mcc_id',$mcc->id)->whereNotIn('id',$suppliers_id)->get();

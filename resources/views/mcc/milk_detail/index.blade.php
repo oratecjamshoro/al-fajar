@@ -139,6 +139,7 @@
                     localStorage.shift = shift;
                     document.cookie = "shift="+shift;
                     Swal.fire("Shift!","Your shift has been changed.","success")
+                    location.reload();
                 }
                 else
                 {

@@ -333,7 +333,7 @@
         let l_snf = (snf+lsnf)-"{{$mcc_milk->snf}}";
         let l_perc = (perc+lperc)-"{{$mcc_milk->percentage}}";
         let l_ts = (ts+lts)-"{{$mcc_milk->ts}}";
-        let l_temp = (temp+ltemp)-"{{$mcc_milk->temperature}}";
+        let l_temp = "{{$mcc_milk->temperature}}"-(temp+ltemp);
         
         $('#glgv').val(l_gv);
         $('#glfat').val(l_fat);
