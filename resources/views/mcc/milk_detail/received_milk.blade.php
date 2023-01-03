@@ -71,9 +71,9 @@
                                                     <td>{{$val->tarif_chanal}}</td>
                                                     <td>{{$val->shift}}</td>
                                                     <td>{{$val->supplierdata->name}}</td>
-                                                    <td>{{$val->gv}}</td>
-                                                    <td>{{$val->fat}}</td>
-                                                    <td>{{$val->lr}}</td>
+                                                    <td>{{round($val->gv,2)}}</td>
+                                                    <td>{{round($val->fat,2)}}</td>
+                                                    <td>{{round($val->lr,2)}}</td>
                                                     <td>{{round($val->snf,2)}}</td>
                                                     <td>{{round($val->percentage,2)}}</td>
                                                     <td>{{round($val->ts,2)}}</td>
@@ -84,7 +84,7 @@
                                             <tfoot>
                                                 <tr>
                                                     <th colspan="4">TOTAL</th>
-                                                    <th>{{$gv}}</th>
+                                                    <th>{{round($gv,2)}}</th>
                                                     <th>{{($gv>0)?round($fat/$gv,2):0}}</th>
                                                     <th>{{($gv>0)?round($lr/$gv,2):0}}</th>
                                                     <th>{{($gv>0)?round($snf/$gv,2):0}}</th>
@@ -123,7 +123,7 @@
                                                 </tr>
                                                 <tr>
                                                     <th colspan="4">TOTAL</th>
-                                                    <th>{{$gv +=$l_gv}}</th>
+                                                    <th>{{round($gv +=$l_gv,2)}}</th>
                                                     <th>{{($gv>0)?round(($fat+$l_fat)/$gv,2):0}}</th>
                                                     <th>{{($gv>0)?round(($lr+$l_lr)/$gv,2):0}}</th>
                                                     <th>{{($gv>0)?round(($snf+$l_snf)/$gv,2):0}}</th>
