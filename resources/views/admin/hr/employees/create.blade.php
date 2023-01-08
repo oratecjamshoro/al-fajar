@@ -153,7 +153,7 @@
         $("#designation").change(function(){
             var designation = $('#designation :selected').text();
 
-            if(designation == 'MCCI')
+            if(designation == 'MCCI' || 'MMT')
             {
                 $("#user_name").css("display","block");
                 $("#password").css("display","block");
