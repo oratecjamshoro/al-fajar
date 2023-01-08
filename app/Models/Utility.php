@@ -5,22 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MilkDetail extends Model
+class Utility extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'gv',
-        'fat',
-        'lr',
-        'snf',
-        'percentage',
-        'ts',
-        'temperature',
+        'generator_reading',
+        'wapda_reading',
+        'ssgc_reading',
+        'date',
         'user_id',
         'mcc_id',
-        'status'
-   	 ];
-    
+        'status',
+    ];
+
     protected static function boot()
     {
         parent::boot();
@@ -29,8 +26,4 @@ class MilkDetail extends Model
         });
     }
 
-    public function supplierdata()
-    {
-        return $this->hasOne('App\Models\Supplier','id','supplier');
-    }
 }

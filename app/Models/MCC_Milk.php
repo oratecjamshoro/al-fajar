@@ -5,9 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MilkDetail extends Model
+class MCC_Milk extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'gv',
         'fat',
@@ -16,6 +17,8 @@ class MilkDetail extends Model
         'percentage',
         'ts',
         'temperature',
+        'type',
+        'date',
         'user_id',
         'mcc_id',
         'status'
@@ -29,8 +32,12 @@ class MilkDetail extends Model
         });
     }
 
-    public function supplierdata()
+    public function getMCC()
     {
-        return $this->hasOne('App\Models\Supplier','id','supplier');
+        return $this->hasOne('App\Models\MCC','id','mcc_id');
+    }
+    public function getUser()
+    {
+        return $this->hasOne('App\Models\User','id','user_id');
     }
 }

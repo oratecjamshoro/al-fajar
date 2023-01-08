@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MilkDetail extends Model
+class MMT_Milk extends Model
 {
     use HasFactory;
     protected $fillable = [
@@ -16,21 +16,16 @@ class MilkDetail extends Model
         'percentage',
         'ts',
         'temperature',
+        'date',
         'user_id',
         'mcc_id',
-        'status'
+        'status',
    	 ];
-    
     protected static function boot()
     {
         parent::boot();
         self::creating(function($model){
             $model->user_id = auth()->id();
         });
-    }
-
-    public function supplierdata()
-    {
-        return $this->hasOne('App\Models\Supplier','id','supplier');
     }
 }

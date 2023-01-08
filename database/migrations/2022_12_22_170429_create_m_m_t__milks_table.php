@@ -13,11 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('milk_details', function (Blueprint $table) {
+        Schema::create('m_m_t__milks', function (Blueprint $table) {
             $table->id();
-            $table->string('tarif_chanal');
-            $table->string('shift');
-            $table->string('supplier');
+            $table->string('shift')->nullable();
             $table->string('gv');
             $table->string('fat');
             $table->string('lr');
@@ -25,6 +23,7 @@ return new class extends Migration
             $table->string('percentage')->nullable();
             $table->string('ts')->nullable();
             $table->string('temperature');
+            $table->date('date');
             $table->integer('user_id')->nullable();
             $table->integer('mcc_id');
             $table->integer('status')->default(0);
@@ -39,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('milk_details');
+        Schema::dropIfExists('m_m_t__milks');
     }
 };

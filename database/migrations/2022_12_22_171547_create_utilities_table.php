@@ -13,20 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('milk_details', function (Blueprint $table) {
+        Schema::create('utilities', function (Blueprint $table) {
             $table->id();
-            $table->string('tarif_chanal');
-            $table->string('shift');
-            $table->string('supplier');
-            $table->string('gv');
-            $table->string('fat');
-            $table->string('lr');
-            $table->string('snf');
-            $table->string('percentage')->nullable();
-            $table->string('ts')->nullable();
-            $table->string('temperature');
+            $table->string('generator_reading')->nullable();
+            $table->string('wapda_reading')->nullable();
+            $table->string('ssgc_reading')->nullable();
+            $table->date('date');
             $table->integer('user_id')->nullable();
-            $table->integer('mcc_id');
+            $table->integer('mcc_id')->nullable();
             $table->integer('status')->default(0);
             $table->timestamps();
         });
@@ -39,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('milk_details');
+        Schema::dropIfExists('utilities');
     }
 };

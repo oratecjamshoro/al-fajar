@@ -19,6 +19,9 @@
         <link href="{{asset('assets/css/app.min.css')}}" rel="stylesheet" type="text/css"  id="app-stylesheet" />
         <link href="{{asset('assets/libs/jquery-toast/jquery.toast.min.css')}}" rel="stylesheet" type="text/css" />
 
+        <!-- Sweet Alert -->
+        <link href="{{asset('assets/libs/sweetalert2/sweetalert2.min.css')}}" rel="stylesheet" type="text/css" />
+        
         @yield('style')
         <style>
             .header-title
@@ -192,8 +195,17 @@
                                     <span>Dashboard</span>
                                 </a>
                             </li>
-
-                            @can('today-access')
+                        @if(Auth::user()->roles->pluck('name')[0]=="MMT")
+                            @can('today-list-access')
+                            <li>
+                                <a href="{{Route('mmt_today_list')}}">
+                                    <i class="fe-airplay"></i>
+                                    <span>Today List</span>
+                                </a>
+                            </li>
+                            @endcan
+                        @else
+                            @can('today-list-access')
                             <li>
                                 <a href="{{Route('milk_detail.index')}}">
                                     <i class="fe-airplay"></i>
@@ -201,6 +213,7 @@
                                 </a>
                             </li>
                             @endcan
+                        @endif
                             
 
                             @can('mcc-access')
@@ -231,14 +244,6 @@
                             </li>
                             @endcan
                             
-                            @can('today-list-access')
-                            <li>
-                                <a href="{{Route('milk_detail.index')}}">
-                                    <i class="fe-airplay"></i>
-                                    <span>Today list</span>
-                                </a>
-                            </li>
-                            @endcan
                             @can('received-milk-access')
                             <li>
                                 <a href="{{Route('received_milk')}}">
@@ -261,7 +266,7 @@
                             <li>
                                 <a href="{{Route('doodi.index')}}">
                                     <i class="fe-airplay"></i>
-                                    <span>Doodi</span>
+                                    <span>Z.A.K Dodhi</span>
                                 </a>
                             </li>
                             @endcan
@@ -465,10 +470,16 @@
 
         <!-- Vendor js -->
         <script src="{{asset('assets/js/vendor.min.js')}}"></script>
-        @yield('script')
+
+        <!-- Sweet Alert -->
+        <script src="{{asset('assets/libs/sweetalert2/sweetalert2.min.js')}}"></script>
+
         <!-- App js -->
         <script src="{{asset('assets/js/app.min.js')}}"></script>
         <script src="{{asset('assets/libs/jquery-toast/jquery.toast.min.js')}}"></script>
+
+        @yield('script')
+
     </body>
 </html>
 

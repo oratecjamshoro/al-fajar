@@ -50,8 +50,8 @@
                                             <tr>
                                                 <td>{{$item->id}}</td>
                                                 <td>{{$item->item_name}}</td>
-                                                <td>{{$item->category_id}}</td>
-                                                <td>{{$item->status}}</td>
+                                                <td>{{$item->getCategory->title}}</td>
+                                                <td>{{get_status($item->status)}}</td>
                                                 <td>
                                                     <a class="btn btn-success btn-xs" href="{{ route('mcc.show',$item->id) }}">
                                                         <i class="fas fa-check-square"></i>

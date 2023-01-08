@@ -46,9 +46,8 @@
                                             <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Image</th>
-                                                <th>Name</th>
-                                                <th>Father Name</th>
+                                                <th>Branch Code</th>
+                                                <th>MCC Name</th>
                                                 <th>Contact</th>
                                                 <th>status</th>
                                                 <th>Action</th>
@@ -58,19 +57,17 @@
     
                                             <tbody>
                                             <?php $a=1; ?>
-                                            @foreach($suppliers as $supplier)
+                                            @foreach($mccs as $mcc)
                                             <tr>
                                                 <td>{{$a++}}</td>
-                                                <td><img src="{{asset($supplier->image)}}" class="d-flex mr-3 rounded-circle" height="64" width="64"></td>
-                                                <td>{{$supplier->name}}</td>
-                                                <td>{{$supplier->father_name}}</td>
-                                                <td>{{$supplier->contact}}</td>
-                                                <td>{{get_status($supplier->status)}}</td>
+                                                <td>{{$mcc->branch_code}}</td>
+                                                <td>{{$mcc->branch_name}}</td>
+                                                <td>{{$mcc->phone}}</td>
+                                                <td>{{get_status($mcc->status)}}</td>
                                                 <td>
-                                                    <a class="btn btn-success btn-xs" href="{{ route('milk_detail.show',$supplier->id) }}">
+                                                    <a class="btn btn-success btn-xs" href="{{route('mmt_today_list.show',$mcc->id) }}">
                                                         Add Milk
                                                     </a>
-
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -139,7 +136,6 @@
                     localStorage.shift = shift;
                     document.cookie = "shift="+shift;
                     Swal.fire("Shift!","Your shift has been changed.","success")
-                    location.reload();
                 }
                 else
                 {

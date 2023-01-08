@@ -39,6 +39,7 @@
                                                 <th>Name</th>
                                                 <th>CNIC</th>
                                                 <th>Contact</th>
+                                                <th>Designation</th>
                                                 <th>status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -52,6 +53,7 @@
                                                 <td>{{$employee->emp_name}}</td>
                                                 <td>{{$employee->emp_cnic}}</td>
                                                 <td>{{$employee->emp_contact}}</td>
+                                                <td>{{$employee->getDesignation->designation}}</td>
                                                 <td>{{$employee->status}}</td>
                                                 <td>
                                                 <a class="btn btn-success btn-xs" href="{{ route('employees.show',$employee->id) }}">

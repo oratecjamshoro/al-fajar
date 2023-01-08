@@ -14,9 +14,9 @@ class Inv_Item extends Model
    	 ];
 
 
-   	public function Inv_Category()
+   	public function getCategory()
     {
-        return $this->belongsTo(Inv_Category::class);
+        return $this->hasOne('App\Models\Inv_Category','id','category_id');
     }
 
     protected static function boot()

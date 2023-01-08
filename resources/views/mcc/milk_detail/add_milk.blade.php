@@ -66,14 +66,14 @@
                                     <form action="{{Route('milk_detail.store')}}" method="post" enctype="multipart/form-data" class="parsley-examples" novalidate="">
                                         @csrf
                                         <div class="row">
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label>Tarif Chanal<span class="text-danger">*</span></label>
                                                     {!! Form::select('tarif_chanal',[''=>'Select Tarif Chanal','buffalo'=>'Buffalo','cow'=>'Cow'], null, ['class' => 'form-control cal','data-toggle'=>'select2','id'=>'tarif']) !!}
                                                 </div>
                                             </div>
                                         
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label>G.V<span class="text-danger">*</span></label>
                                                     <input type="text" name="gv" id="gv" parsley-trigger="change" required
@@ -81,58 +81,59 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label>FAT<span class="text-danger">*</span></label>
                                                     <input type="text" name="fat" id="fat" parsley-trigger="change" required
                                                         placeholder="Enter FAT" class="form-control cal">
                                                 </div>
                                             </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-4">
+                                        
+                                            <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label>L.R<span class="text-danger">*</span></label>
                                                     <input type="text" name="lr" id="lr" parsley-trigger="change" required
                                                         placeholder="Enter L.R" class="form-control cal">
                                                 </div>
                                             </div>
-                                        
-                                            <div class="col-md-4">
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label>SNF<span class="text-danger">*</span></label>
-                                                    <input type="text" name="snf" id="snf" parsley-trigger="change" required
+                                                    <input type="text" id="snf-tem" parsley-trigger="change" required
                                                         placeholder="Enter SNF" class="form-control cal" readonly>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label>6%<span class="text-danger">*</span></label>
-                                                    <input type="text" name="percentage" id="percentage" parsley-trigger="change" 
+                                                    <input type="text" id="percentage-tem" parsley-trigger="change" 
                                                         placeholder="Enter 6%" class="form-control" readonly>
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label>T.S<span class="text-danger">*</span></label>
-                                                    <input type="text" name="ts" id="ts" parsley-trigger="change" 
+                                                    <input type="text" id="ts-tem" parsley-trigger="change" 
                                                         placeholder="Enter T.S" class="form-control" readonly>
                                                 </div>
                                             </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-4">
+                                        
+                                            <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label>Temperature</label>
                                                     <input type="text" name="temperature" parsley-trigger="change" required
-                                                        placeholder="Enter Temperature" class="form-control cal">
+                                                        placeholder="Enter Temperature" class="form-control">
                                                 </div>
                                             </div>
                                         </div>    
 
+                                        <input type="hidden" name="snf" id="snf">
+                                        <input type="hidden" name="percentage" id="percentage">
+                                        <input type="hidden" name="ts" id="ts">
                                         <input type="hidden" name="id" value="{{$supplier->id}}">
                                         <div class="form-group text-right mb-0">
                                             <button class="btn btn-primary waves-effect waves-light mr-1" type="submit">
@@ -150,7 +151,6 @@
                         <!-- end row -->                        
                     </div> <!-- end container-fluid -->
                 </div> <!-- end content -->
-
 @endsection
 
 @section('script')
@@ -165,22 +165,42 @@
 <script src="{{asset('assets/js/pages/form-masks.init.js')}}"></script>
 
 <script>
-    if(localStorage.shift)
+
+    if(localStorage.shift && getCookie('shift') !="")
     {
         $('#shift').html(localStorage.shift);
     }
     else
     {
-        alert('Please go back and select Shift');
-        history.back();
+        Swal.fire({
+            title:"Sorry",
+            text:"Please go back and select Shift!",
+            type:"warning",
+        }).then(function(t){
+            localStorage.shift="";
+            history.back();
+        })
+        
     }
 
-    $('#ts').parent().parent().hide();
-    $('#percentage').parent().parent().hide();
+function getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
 
-
-
-
+    //$('#ts').parent().parent().hide();
+    //$('#percentage').parent().parent().hide();
 
     $('.cal').on('keyup change', function(e) {
 
@@ -188,8 +208,6 @@
         let gv = ($('#gv').val())?parseFloat($('#gv').val()):0.00;
         let fat = ($('#fat').val())?parseFloat($('#fat').val()):0.00;
         let lr = ($('#lr').val())?parseFloat($('#lr').val()):0.00;
-
-        
         let snf = 0;
 
         if(lr >0)
@@ -198,23 +216,27 @@
         }
         
         $('#snf').val(snf);
+        $('#percentage').val((gv*fat/6));
+        $('#ts').val((fat+snf)*gv/13);
 
-        //alert("GV: "+gv+" FAT: "+fat+" LR: "+lr+" SNF: "+snf)
+        $('#snf-tem').val((snf).toFixed(2));
+        $('#percentage-tem').val((gv*fat/6).toFixed(2));
+        $('#ts-tem').val(((fat+snf)*gv/13).toFixed(2));
 
-        if(tarif == 'buffalo')
-        {
-            $('#percentage').parent().parent().show();
-            $('#ts').val('');
-            $('#percentage').val((gv*fat/6));
-            $('#ts').parent().parent().hide();
-        }
-        else if(tarif == 'cow')
-        {
-            $('#ts').parent().parent().show();
-            $('#percentage').val('');
-            $('#ts').val(((fat+snf)*gv/13).toFixed(2));
-            $('#percentage').parent().parent().hide();
-        }
+        // if(tarif == 'buffalo')
+        // {
+        //     $('#percentage').parent().parent().show();
+        //     $('#ts').val('');
+        //     $('#percentage').val((gv*fat/6));
+        //     $('#ts').parent().parent().hide();
+        // }
+        // else if(tarif == 'cow')
+        // {
+        //     $('#ts').parent().parent().show();
+        //     $('#percentage').val('');
+        //     $('#ts').val(((fat+snf)*gv/13).toFixed(2));
+        //     $('#percentage').parent().parent().hide();
+        // }
 
     });
     
