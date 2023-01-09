@@ -40,4 +40,12 @@ if(!function_exists('get_average'))
 	}
 }
 
+if(!function_exists('num_format'))
+{
+    function num_format($val)
+	{
+	  return number_format(round($val,2),2);
+	}
+}
+
 ?>

@@ -89,7 +89,15 @@ class MilkDetailController extends Controller
         }
 
         $received_milk = MilkDetail::whereDate('created_at', Carbon::today())->where(['mcc_id'=>$mcc->id,'status'=>0])->with('supplierdata')->get();
-        $left_over = MCC_Milk::where(['mcc_id'=>$mcc->id,'status'=>0,'type'=>'left over'])->get();
+        $left_over = MCC_Milk::where(['mcc_id'=>$mcc->id,'status'=>0,'type'=>'left over'])->get([
+            DB::raw('SUM(gv) AS gv'),
+            DB::raw('SUM(fat) AS fat'),
+            DB::raw('SUM(lr) AS lr'),
+            DB::raw('SUM(snf) AS snf'),
+            DB::raw('SUM(percentage) AS percentage'),
+            DB::raw('SUM(ts) AS ts'),
+            DB::raw('SUM(temperature) AS temperature'),
+        ]);
 
         return view('mcc.milk_detail.received_milk',compact('received_milk','left_over'));
     }
@@ -100,66 +108,63 @@ class MilkDetailController extends Controller
         {
             return 'You have not assign any MCC';
         }
+        $total_milk = MilkDetail::whereDate('created_at', Carbon::today())->where(['mcc_id'=>$mcc->id,'status'=>0])->get([
+            DB::raw('SUM(gv) AS gv'),
+            DB::raw('SUM(fat*gv) AS fat'),
+            DB::raw('SUM(lr*gv) AS lr'),
+            DB::raw('SUM(snf*gv) AS snf'),
+            DB::raw('SUM(percentage) AS percentage'),
+            DB::raw('SUM(ts) AS ts'),
+            DB::raw('SUM(temperature*gv) AS temperature'),
+        ]);
 
-        $total_milk = MilkDetail::select()->whereDate('created_at', Carbon::today())->where(['mcc_id'=>$mcc->id,'status'=>0])->get();
+        $left_over = MCC_Milk::where(['mcc_id'=>$mcc->id,'status'=>0,'type'=>'left over'])->get([
+            DB::raw('SUM(gv) AS gv'),
+            DB::raw('SUM(fat*gv) AS fat'),
+            DB::raw('SUM(lr*gv) AS lr'),
+            DB::raw('SUM(snf*gv) AS snf'),
+            DB::raw('SUM(percentage) AS percentage'),
+            DB::raw('SUM(ts) AS ts'),
+            DB::raw('SUM(temperature*gv) AS temperature'),
+        ]);
 
-        if(count($total_milk) >0)
+
+        if($total_milk[0]->gv > 0 || $left_over[0]->gv > 0)
         {
-            $gv = 0;
-            $fat = 0;
-            $lr = 0;
-            $snf = 0;
-            $per = 0;
-            $ts = 0;
-            $temp = 0;
-
-            foreach($total_milk as $val)
-            {
-                $gv +=$val->gv;
-                $fat +=$val->fat*$val->gv;
-                $lr +=$val->lr*$val->gv;
-                $snf +=$val->snf*$val->gv;
-                $per +=$val->percentage;
-                $ts +=$val->ts;
-                $temp +=$val->temperature*$val->gv;
-            }
+            //New Milk
+            $gv =$total_milk[0]->gv;
+            $fat =$total_milk[0]->fat;
+            $lr =$total_milk[0]->lr;
+            $snf =$total_milk[0]->snf;
+            $per =$total_milk[0]->percentage;
+            $ts =$total_milk[0]->ts;
+            $temp =$total_milk[0]->temperature;
             
-            $left_over = MCC_Milk::where(['mcc_id'=>$mcc->id,'status'=>0,'type'=>'left over'])->get();
-            $l_gv = 0;
-            $l_fat = 0;
-            $l_lr = 0;
-            $l_snf = 0;
-            $l_per = 0;
-            $l_ts = 0;
-            $l_temp = 0;
-
-            foreach($left_over as $val2)
-            {
-                $l_gv +=$val2->gv;
-                $l_fat +=$val2->fat;
-                $l_lr +=$val2->lr;
-                $l_snf +=$val2->snf;
-                $l_per +=$val2->percentage;
-                $l_ts +=$val2->ts;
-                $l_temp +=$val2->temperature;
-            }
-
+            //Left Over Milk
+            $l_gv =$left_over[0]->gv;
+            $l_fat =$left_over[0]->fat;
+            $l_lr =$left_over[0]->lr;
+            $l_snf =$left_over[0]->snf;
+            $l_per =$left_over[0]->percentage;
+            $l_ts =$left_over[0]->ts;
+            $l_temp =$left_over[0]->temperature;
+            
 
             $mmc_milk = new MCC_Milk;
             $mmc_milk['gv'] = ($gv+$l_gv);
-            $mmc_milk['fat'] = ($fat+$l_fat)/$gv;
-            $mmc_milk['lr'] = ($lr+$l_lr)/$gv;
-            $mmc_milk['snf'] = ($snf+$l_snf)/$gv;
+            $mmc_milk['fat'] = ($fat+$l_fat)/($gv+$l_gv);
+            $mmc_milk['lr'] = ($lr+$l_lr)/($gv+$l_gv);
+            $mmc_milk['snf'] = ($snf+$l_snf)/($gv+$l_gv);
             $mmc_milk['percentage'] = ($per+$l_per);
             $mmc_milk['ts'] = ($ts+$l_ts);
-            $mmc_milk['temperature'] = ($temp+$l_temp)/$gv;
+            $mmc_milk['temperature'] = ($temp+$l_temp)/($gv+$l_gv);
             $mmc_milk['shift'] = $_COOKIE['shift'];
             $mmc_milk['type'] = 'Collaction';
             $mmc_milk['date'] = date("Y-m-d");
             $mmc_milk['mcc_id'] = $mcc->id; 
             $mmc_milk->save();
 
-            MilkDetail::where(['mcc_id'=>$mcc->id,'status'=>0])->whereDate('created_at', Carbon::today())->update(['status'=>1]);
+            MilkDetail::whereDate('created_at', Carbon::today())->where(['mcc_id'=>$mcc->id,'status'=>0])->update(['status'=>1]);
             MCC_Milk::where(['mcc_id'=>$mcc->id,'status'=>0,'type'=>'left over'])->update(['status'=>1]);
 
             return redirect('received_milk')->with('success',"Sheet closed successfully");

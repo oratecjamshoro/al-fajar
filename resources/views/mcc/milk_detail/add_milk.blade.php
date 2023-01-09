@@ -69,7 +69,7 @@
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label>Tarif Chanal<span class="text-danger">*</span></label>
-                                                    {!! Form::select('tarif_chanal',[''=>'Select Tarif Chanal','buffalo'=>'Buffalo','cow'=>'Cow'], null, ['class' => 'form-control cal','data-toggle'=>'select2','id'=>'tarif']) !!}
+                                                    {!! Form::select('tarif_chanal',[''=>'Select Tarif Chanal','buffalo'=>'Buffalo','cow'=>'Cow'], 'cow', ['class' => 'form-control cal','data-toggle'=>'select2','id'=>'tarif']) !!}
                                                 </div>
                                             </div>
                                         

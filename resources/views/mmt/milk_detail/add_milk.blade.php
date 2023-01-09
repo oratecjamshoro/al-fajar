@@ -87,13 +87,13 @@
                                                 <tbody>
                                                     <tr>
                                                         <td>MCC Total</td>
-                                                        <td>{{round($mcc_milk->gv,2)}}</td>
-                                                        <td>{{round($mcc_milk->fat,2)}}</td>
-                                                        <td>{{round($mcc_milk->lr,2)}}</td>
-                                                        <td>{{round($mcc_milk->snf,2)}}</td>
-                                                        <td>{{round($mcc_milk->percentage,2)}}</td>
-                                                        <td>{{round($mcc_milk->ts,2)}}</td>
-                                                        <td>{{round($mcc_milk->temperature,2)}}</td>
+                                                        <td>{{num_format($mcc_milk->gv)}}</td>
+                                                        <td>{{num_format($mcc_milk->fat)}}</td>
+                                                        <td>{{num_format($mcc_milk->lr)}}</td>
+                                                        <td>{{num_format($mcc_milk->snf)}}</td>
+                                                        <td>{{num_format($mcc_milk->percentage)}}</td>
+                                                        <td>{{num_format($mcc_milk->ts)}}</td>
+                                                        <td>{{num_format($mcc_milk->temperature)}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>MMT Rec:</td>
@@ -159,13 +159,13 @@
                                                     </tr>
                                                     <tr>
                                                         <td >Loss/Gain</td>
-                                                        <td id="l_gv">0</td>
-                                                        <td id="l_fat">0</td>
-                                                        <td id="l_lr">0</td>
-                                                        <td id="l_snf">0</td>
-                                                        <td id="l_perc">0</td>
-                                                        <td id="l_ts">0</td>
-                                                        <td id="l_temp">0</td>
+                                                        <td id="l_gv">0.00</td>
+                                                        <td id="l_fat">0.00</td>
+                                                        <td id="l_lr">0.00</td>
+                                                        <td id="l_snf">0.00</td>
+                                                        <td id="l_perc">0.00</td>
+                                                        <td id="l_ts">0.00</td>
+                                                        <td id="l_temp">0.00</td>
                                                     </tr>
                                                 </tbody>
                                             </table>

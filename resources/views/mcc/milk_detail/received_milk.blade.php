@@ -71,65 +71,57 @@
                                                     <td>{{$val->tarif_chanal}}</td>
                                                     <td>{{$val->shift}}</td>
                                                     <td>{{$val->supplierdata->name}}</td>
-                                                    <td>{{round($val->gv,2)}}</td>
-                                                    <td>{{round($val->fat,2)}}</td>
-                                                    <td>{{round($val->lr,2)}}</td>
-                                                    <td>{{round($val->snf,2)}}</td>
-                                                    <td>{{round($val->percentage,2)}}</td>
-                                                    <td>{{round($val->ts,2)}}</td>
-                                                    <td>{{$val->temperature}}</td>
+                                                    <td>{{num_format($val->gv)}}</td>
+                                                    <td>{{num_format($val->fat)}}</td>
+                                                    <td>{{num_format($val->lr)}}</td>
+                                                    <td>{{num_format($val->snf)}}</td>
+                                                    <td>{{num_format($val->percentage)}}</td>
+                                                    <td>{{num_format($val->ts)}}</td>
+                                                    <td>{{num_format($val->temperature)}}</td>
                                                 </tr>
                                             @endforeach
                                             </tbody>
                                             <tfoot>
                                                 <tr>
                                                     <th colspan="4">TOTAL</th>
-                                                    <th>{{round($gv,2)}}</th>
-                                                    <th>{{($gv>0)?round($fat/$gv,2):0}}</th>
-                                                    <th>{{($gv>0)?round($lr/$gv,2):0}}</th>
-                                                    <th>{{($gv>0)?round($snf/$gv,2):0}}</th>
-                                                    <th>{{($gv>0)?round($percentage,2):0}}</th>
-                                                    <th>{{($gv>0)?round($ts,2):0}}</th>
-                                                    <th>{{($gv>0)?round($temperature/$gv,2):0}}</th>
+                                                    <th>{{num_format($gv)}}</th>
+                                                    <th>{{num_format(($gv>0)?$fat/$gv:0)}}</th>
+                                                    <th>{{num_format(($gv>0)?$lr/$gv:0)}}</th>
+                                                    <th>{{num_format(($gv>0)?$snf/$gv:0)}}</th>
+                                                    <th>{{num_format(($gv>0)?$percentage:0)}}</th>
+                                                    <th>{{num_format(($gv>0)?$ts:0)}}</th>
+                                                    <th>{{num_format(($gv>0)?$temperature/$gv:0)}}</th>
                                                 </tr>
                                                 <?php
-                                                $l_gv=0;
-                                                $l_fat=0;
-                                                $l_lr=0;
-                                                $l_snf=0;
-                                                $l_per=0;
-                                                $l_ts=0;
-                                                $l_temp=0;
-                                                foreach ($left_over as $left)
-                                                {
-                                                    $l_gv +=$left->gv;
-                                                    $l_fat +=$left->fat;
-                                                    $l_lr +=$left->lr;
-                                                    $l_snf +=$left->snf;
-                                                    $l_per +=$left->percentage;
-                                                    $l_ts +=$left->ts;
-                                                    $l_temp +=$left->temperature;
-                                                }
+                                                
+                                                $l_gv =$left_over[0]->gv;
+                                                $l_fat =$left_over[0]->fat;
+                                                $l_lr =$left_over[0]->lr;
+                                                $l_snf =$left_over[0]->snf;
+                                                $l_per =$left_over[0]->percentage;
+                                                $l_ts =$left_over[0]->ts;
+                                                $l_temp =$left_over[0]->temperature;
+                                            
                                                 ?>
                                                 <tr>
                                                     <th colspan="4">LEFT OVER</th>
-                                                    <th>{{round($l_gv,2)}}</th>
-                                                    <th>{{round($l_fat,2)}}</th>
-                                                    <th>{{round($l_lr,2)}}</th>
-                                                    <th>{{round($l_snf,2)}}</th>
-                                                    <th>{{round($l_per,2)}}</th>
-                                                    <th>{{round($l_ts,2)}}</th>
-                                                    <th>{{round($l_temp,2)}}</th>
+                                                    <th>{{num_format($l_gv)}}</th>
+                                                    <th>{{num_format($l_fat)}}</th>
+                                                    <th>{{num_format($l_lr)}}</th>
+                                                    <th>{{num_format($l_snf)}}</th>
+                                                    <th>{{num_format($l_per)}}</th>
+                                                    <th>{{num_format($l_ts)}}</th>
+                                                    <th>{{num_format($l_temp)}}</th>
                                                 </tr>
                                                 <tr>
                                                     <th colspan="4">TOTAL</th>
-                                                    <th>{{round($gv +=$l_gv,2)}}</th>
-                                                    <th>{{($gv>0)?round(($fat+$l_fat)/$gv,2):0}}</th>
-                                                    <th>{{($gv>0)?round(($lr+$l_lr)/$gv,2):0}}</th>
-                                                    <th>{{($gv>0)?round(($snf+$l_snf)/$gv,2):0}}</th>
-                                                    <th>{{($gv>0)?round(($percentage+$l_per),2):0}}</th>
-                                                    <th>{{($gv>0)?round(($ts+$l_ts),2):0}}</th>
-                                                    <th>{{($gv>0)?round(($temperature+$l_temp)/$gv,2):0}}</th>
+                                                    <th>{{num_format($gv +=$l_gv)}}</th>
+                                                    <th>{{num_format(($gv>0)?($fat+($l_fat*$l_gv))/$gv:0)}}</th>
+                                                    <th>{{num_format(($gv>0)?($lr+($l_lr*$l_gv))/$gv:0)}}</th>
+                                                    <th>{{num_format(($gv>0)?($snf+($l_snf*$l_gv))/$gv:0)}}</th>
+                                                    <th>{{num_format(($gv>0)?($percentage+$l_per):0)}}</th>
+                                                    <th>{{num_format(($gv>0)?($ts+$l_ts):0)}}</th>
+                                                    <th>{{num_format(($gv>0)?($temperature+($l_temp*$l_gv))/$gv:0)}}</th>
                                                 </tr>
                                             </tfoot>
                                         </table>
